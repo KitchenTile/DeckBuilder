@@ -14,6 +14,7 @@ export default class Player {
         if (this.energy >= card.energyCost){
             card.play(target);
             this.energy -= card.energyCost;
+            console.log(`${card.title} used!`)
         } else {
             console.log("Not enough energy!")
         }

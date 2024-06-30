@@ -12,15 +12,17 @@ export class Card {
     // }
 
     play(target) {
-        if (this.type === "attack") {
-            target.health += this.effect;
-            console.log(1)
-        } else if (this.type === "defense") {
-            target.armor += this.effect;
-            console.log(2)
-        } else if (this.type === "charger") {
-            target.energy += this.effect;
-            console.log(3)
+        switch (this.type){
+            case "attack":
+                target.health += this.effect;
+                break;
+            case "defense":
+                target.armor += this.effect;
+                break;
+            case "charger":
+                target.energy += this.effect;
+                target.health += this.effect;
+                break;
         }
     }
 }

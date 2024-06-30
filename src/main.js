@@ -126,7 +126,7 @@ console.log(player.deck);
 // const chickenLeg = new Card("Chicken Leg", "charger", 2, "A healthy dose of protein", 0);
 
 player.useCard(player.deck[0], enemy);
-// player.useCard(chainMail, player);
+player.useCard(player.deck[1], player);
 
 console.log(`Energy left: ${player.energy}`);
 // console.log(`${attackCard.type}`);
@@ -137,7 +137,7 @@ console.log(`Energy left: ${player.energy}`);
 // enemy2.attack(player);
 // console.log(`Player Health: ${player.health}`);
 console.log(`Enemy Health: ${enemy.health}`);
-// console.log(`Player armor: ${player.armor}`);
+console.log(`Player armor: ${player.armor}`);
 
 // player.useCard(chickenLeg, player);
 // console.log(`Energy left: ${player.energy}`);
