@@ -115,34 +115,25 @@ grid = generateRandomPath(grid, rows, cols);
 displayGrid(grid, tileX, tileY);
 
 const player = new Player("Blue");
-const enemy = new Mage("Mage", 0.1);
+const enemy = new Mage("Mage", 0.9);
 const enemy2 = new Bandit("Archer", 0.1);
 
 initDeck(player);
-console.log(player.deck);
 
-// const attackCard = new Card("Slash", "attack", -10, "A deadly slash", 2);
-// const chainMail = new Card("Chain Mail", "defense", 5, "Prevents slashes", 1);
-// const chickenLeg = new Card("Chicken Leg", "charger", 2, "A healthy dose of protein", 0);
+player.useCard("Slash", enemy);
+player.useCard("Slash", enemy);
 
-player.useCard(player.deck[0], enemy);
-player.useCard(player.deck[1], player);
-
-console.log(`Energy left: ${player.energy}`);
-// console.log(`${attackCard.type}`);
-// console.log(`${chainMail.type}`);
+player.useCard("Chicken Leg", player);
 
 // enemy.buff(enemy2);
 // enemy2.anger();
 // enemy2.attack(player);
-// console.log(`Player Health: ${player.health}`);
-console.log(`Enemy Health: ${enemy.health}`);
-console.log(`Player armor: ${player.armor}`);
 
-// player.useCard(chickenLeg, player);
+player.useCard("Chain Mail", enemy);
 // console.log(`Energy left: ${player.energy}`);
 
 
+player.displayStats();
 
-
+player.useCard("Chain Mail", player);
 

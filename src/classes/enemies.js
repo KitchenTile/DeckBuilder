@@ -1,16 +1,18 @@
+//Create enemy class with some properties that will be inhereted by the differnet types of enemies
+
 export class Enemy {
     constructor(name, dodgeChance) {
         this.name = name;
         // this.position = position;
-        // this.damage = damage;
         this.dodgeChance = dodgeChance;
         this.health = 50;
     }
 
+    //Attack method that takes a target and manages the player armor and health
     attack(target) {
         if (target.armor > 0){
             if (target.armor >= this.damage) {
-                target.armor -= 5;
+                target.armor -= this.damage;
             } else if (target.armor < this.damage) {
                 let damageRest = target.armor -= this.damage;
                 target.health += damageRest;
@@ -23,6 +25,8 @@ export class Enemy {
 
 }
 
+
+//Two enemy subclasses with an unique method each
 export class Mage extends Enemy {
     constructor(name, dodgeChance) {
         super(name, dodgeChance);
@@ -32,7 +36,7 @@ export class Mage extends Enemy {
 
     buff(target) {
         target.damage += target.damage * this.buffAbility / 100;
-        console.log(target.damage);
+        console.log(`${target.name}'s damage increased to ${target.damage}!`);
     }
 }
 
@@ -44,6 +48,6 @@ export class Bandit extends Enemy {
 
     anger() {
         this.damage += this.damage * 0.5;
-        console.log(this.damage);
+        console.log(`${this.name}'s damage increased to ${this.damage}!`);
     }
 }
