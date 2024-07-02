@@ -16,8 +16,9 @@ export class Card {
             case "attack":
                 console.log(`${this.title} used!`)
                 const random = Math.random();
-                if (random  >=  target.dodgeChange) { // if a random number between 0 and 1 is over or equal the enemies dodgeChance number, perform attack.
+                if (random  >=  target.dodgeChance) { // if a random number between 0 and 1 is over or equal the enemies dodgeChance number, perform attack.
                     target.health += this.effect;
+                    console.log(`${target.name} took ${this.effect * -1} damage`);
                 } else {
                     console.log(`${target.name} dodged the attack!`);
                 }
@@ -28,7 +29,7 @@ export class Card {
                     target.armor += this.effect;
                     console.log(`${this.title} used!`)
                 } else {
-                    console.log("Can't use this card on this target!") //- needs fix - card still gets deleted from the deck -- FIXED
+                    console.log("Can't use this card on this target!") //- needs fix - card still gets deleted from the deck
                     return false; 
                 }
                 break;
@@ -53,8 +54,8 @@ export class Card {
     {title: "Slash", type: "attack", effect: -10, legend: "A deadly slash", energyCost: 2},
     {title: "Slash", type: "attack", effect: -10, legend: "A deadly slash", energyCost: 2},
 
-    {title: "Chain Mail", type: "defense", effect: 5, legend: "Prevents slashes", energyCost: 1},
-    {title: "Chain Mail", type: "defense", effect: 5, legend: "Prevents slashes", energyCost: 1},
+    {title: "Chain Mail", type: "defense", effect: 2, legend: "Prevents slashes", energyCost: 1},
+    {title: "Chain Mail", type: "defense", effect: 2, legend: "Prevents slashes", energyCost: 1},
 
     {title: "Chicken Leg", type: "charger", effect: 2, legend: "A healthy dose of protein", energyCost: 0},
 

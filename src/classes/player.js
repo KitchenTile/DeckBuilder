@@ -10,7 +10,7 @@ export default class Player {
         this.deck = [];
         this.cash = 0;
         // this.items = [];
-        this.energy = 10;
+        this.energy = 3;
     }
 
 
@@ -41,16 +41,20 @@ export default class Player {
 
     //Method to display the deck
     displayDeck() {
+        console.log(`////////////////////////////////////`);
         console.log("Cards in deck: ")
         this.deck.forEach(card => {
-            console.log(`${card.title} - Energy Cost: ${card.energyCost}`)
+            console.log(`-- ${card.title} - Energy Cost: ${card.energyCost}`)
         })
+        console.log(`////////////////////////////////////`);
     }
 
     // display common stats
     displayStats() {
+        console.log(`////////////////////////////////////`);
         console.log(`Player Health: ${this.health}`);
         console.log(`Player armor: ${this.armor}`);
         console.log(`Energy left: ${this.energy}`);
+        console.log(`////////////////////////////////////`);
     }
 }
