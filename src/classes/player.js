@@ -10,27 +10,32 @@ export default class Player {
         this.deck = [];
         this.cash = 0;
         // this.items = [];
-        this.energy = 3;
+        this.energy = 100;
+        this.hand = [];
+        this.handMax = 5;
+        this.discardPile = [];
     }
 
 
     //Method to use cards
     useCard(title, target) {
-        const cardIndex = this.deck.findIndex(card => card.title === title); //Find the first card of which title matches with our title.
+        const cardIndex = this.hand.findIndex(card => card.title === title); //Find the first card of which title matches with our title.
         if (cardIndex !== -1){ // if it exists and the energy costs is equal or less than our energy amount, play and delete the card from our deck.
-            const card = this.deck[cardIndex];
+            const card = this.hand[cardIndex];
             if (this.energy >= card.energyCost){
                 const canUse = card.play(target); // canUse checks if the card effect can be applied to the target
                 if (canUse) {
                     this.energy -= card.energyCost;
-                    this.deck.splice(cardIndex, 1);
+                    this.hand.splice(cardIndex, 1);
+                    this.discardPile.push(card);
+                    console.log(this.discardPile);
                 }
-                this.displayDeck();
+                this.displayHand();
             } else {
                 console.log("Not enough energy!")
             }
         } else {
-            console.log("Card not on deck!")
+            console.log("Card not in hand!")
         }
     }
 
@@ -39,7 +44,7 @@ export default class Player {
         this.deck.push(card);
     }
 
-    //Method to display the deck
+    //Method to display the deck in the terminal
     displayDeck() {
         console.log(`////////////////////////////////////`);
         console.log("Cards in deck: ")
@@ -49,7 +54,7 @@ export default class Player {
         console.log(`////////////////////////////////////`);
     }
 
-    // display common stats
+    // display common stats in the terminal
     displayStats() {
         console.log(`////////////////////////////////////`);
         console.log(`Player Health: ${this.health}`);
@@ -57,4 +62,37 @@ export default class Player {
         console.log(`Energy left: ${this.energy}`);
         console.log(`////////////////////////////////////`);
     }
+
+    // Method to add random cards from the deck to the hand and remove them from the deck
+    getHand() {
+        while (this.hand.length < this.handMax) {
+            if (this.deck.length > 0){ // if the deck is not empty put cards from deck randomly into the hand
+                const random = Math.floor(Math.random() * this.deck.length);
+                const randomCard = this.deck[random];
+                this.hand.push(randomCard);
+                this.deck.splice(this.deck.indexOf(randomCard), 1);
+            } else { // if the deck is empty, dump the cards from the discard pile into the deck - I could use a different method for this maybe
+                console.log("Shuffling...")
+                this.discardPile.forEach(card => {
+                    this.deck.push(card);
+                })
+                this.displayDeck();
+                this.discardPile = [];
+            }
+        }
+        this.displayDeck();
+        this.displayHand();
+    }
+
+    //Display the hand in the terminal
+    displayHand() {
+        console.log(`////////////////////////////////////`);
+        console.log("Cards in hand: ")
+        this.hand.forEach(card => {
+            console.log(`-- ${card.title} - Energy Cost: ${card.energyCost}`)
+        })
+        console.log(`////////////////////////////////////`);
+    }
+
+    
 }

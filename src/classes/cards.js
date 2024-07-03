@@ -53,12 +53,14 @@ export class Card {
  const cardData = [
     {title: "Slash", type: "attack", effect: -10, legend: "A deadly slash", energyCost: 2},
     {title: "Slash", type: "attack", effect: -10, legend: "A deadly slash", energyCost: 2},
+    {title: "Slash", type: "attack", effect: -10, legend: "A deadly slash", energyCost: 2},
 
     {title: "Chain Mail", type: "defense", effect: 2, legend: "Prevents slashes", energyCost: 1},
     {title: "Chain Mail", type: "defense", effect: 2, legend: "Prevents slashes", energyCost: 1},
-
-    {title: "Chicken Leg", type: "charger", effect: 2, legend: "A healthy dose of protein", energyCost: 0},
-
+    {title: "Chain Mail", type: "defense", effect: 2, legend: "Prevents slashes", energyCost: 1},
+    
+    {title: "Chicken Leg", type: "charger", effect: 3, legend: "A healthy dose of protein", energyCost: 1},
+    {title: "Fried Crickets", type: "charger", effect: 1, legend: "A fair dose of protein", energyCost: 0},
 ];
 
 //Create cards based on the above array
@@ -74,4 +76,6 @@ export const initDeck = player => {
         player.addToDeck(newCard);
     })
     player.displayDeck();
+    player.getHand();
 }
+

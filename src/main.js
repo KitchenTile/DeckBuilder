@@ -146,9 +146,9 @@ initDeck(player);
 
 
 
-enemy.heal(enemy2);
+// enemy.heal(enemy2);
 
-player.displayStats();
+// player.displayStats();
 
 const scale = window.devicePixelRatio;
 canvas.width = 800 * scale;
@@ -159,7 +159,7 @@ context.scale(scale, scale);
 const addText = (text, x, y) => {
   context.fillStyle = "white";
   context.font = '16px Helvetica';
-  context.fillText(text, x, y)
+  context.fillText(text, x, y);
 }
 
 const displayPlayerStats = () => {
@@ -180,14 +180,40 @@ const displayDeck = () => {
   addText(`Deck`, 20, 250);
   player.deck.forEach((card, index) => {
     const x = 20 + index * 180;
-    addText(`${card.title} - Energy: ${card.energyCost}`, x, 300)
+    if (x < 450){
+      addText(`${card.title} - Energy: ${card.energyCost}`, x, 300);
+    } else {
+      addText(`${card.title} - Energy: ${card.energyCost}`, x - 600, 350);
+    }
   })
+}
+
+const displayHand = () => {
+  addText(`Hand`, 20, 450);
+  player.hand.forEach((card, index) => {
+    const x = 20 + index * 200;
+    if (x < 450){
+        addText(`${card.title} - Energy: ${card.energyCost}`, x, 500);
+      } else {
+        addText(`${card.title} - Energy: ${card.energyCost}`, x - 600, 550);
+      }
+    })
+  
 }
 
 const updateUI = () => {
   displayPlayerStats();
   displayEnemyStats();
   displayDeck();
+  displayHand();
 }
 
 updateUI();
+
+player.useCard(player.hand[0].title,player)
+player.useCard(player.hand[0].title,player)
+player.useCard(player.hand[0].title,player)
+player.useCard(player.hand[0].title,player)
+player.useCard(player.hand[0].title,player)
+
+player.getHand();
