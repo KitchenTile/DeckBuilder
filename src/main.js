@@ -162,6 +162,10 @@ const addText = (text, x, y) => {
   context.fillText(text, x, y);
 }
 
+const clearUI = () => {
+  context.clearRect(0, 0, canvas.width, canvas.height);
+}
+
 const displayPlayerStats = () => {
   addText(`${player.name}'s Stats`, 20, 30);
   addText(`Health: ${player.health}`, 20, 70);
@@ -202,6 +206,7 @@ const displayHand = () => {
 }
 
 const updateUI = () => {
+  clearUI();
   displayPlayerStats();
   displayEnemyStats();
   displayDeck();
@@ -210,10 +215,8 @@ const updateUI = () => {
 
 updateUI();
 
-player.useCard(player.hand[0].title,player)
-player.useCard(player.hand[0].title,player)
-player.useCard(player.hand[0].title,player)
-player.useCard(player.hand[0].title,player)
-player.useCard(player.hand[0].title,player)
+setTimeout(() => {
+  player.useCard(player.hand[0].title,player)
+updateUI();
+}, 2000)
 
-player.getHand();
