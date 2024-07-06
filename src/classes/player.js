@@ -1,16 +1,18 @@
+
+import { logToPrint } from "../main";
+
 //Created a player class with a couple of properties I thought were appropriate,
 //Will probalby change a lot of this later on
-
 export default class Player {
     constructor(name) {
         this.name = name;
-        this.health = 100;
+        this.health = 10;
         this.position = {x:0, y:0};
         this.armor = 0;
         this.deck = [];
         this.cash = 0;
         // this.items = [];
-        this.energy = 100;
+        this.energy = 3;
         this.hand = [];
         this.handMax = 5;
         this.discardPile = [];
@@ -28,14 +30,13 @@ export default class Player {
                     this.energy -= card.energyCost;
                     this.hand.splice(cardIndex, 1);
                     this.discardPile.push(card);
-                    console.log(this.discardPile);
                 }
                 this.displayHand();
             } else {
-                console.log("Not enough energy!")
+                logToPrint("Not enough energy!")
             }
         } else {
-            console.log("Card not in hand!")
+            logToPrint("Card not in hand!")
         }
     }
 
@@ -84,6 +85,14 @@ export default class Player {
         this.displayHand();
     }
 
+    discardHand() {
+        this.hand.forEach(card => {
+            this.discardPile.push(card);
+        })
+        this.hand= [];
+        console.log("discarding hand...")
+    }
+
     //Display the hand in the terminal
     displayHand() {
         console.log(`////////////////////////////////////`);
@@ -93,6 +102,4 @@ export default class Player {
         })
         console.log(`////////////////////////////////////`);
     }
-
-    
 }
