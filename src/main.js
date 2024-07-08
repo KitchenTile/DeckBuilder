@@ -8,7 +8,6 @@ const canvas = document.getElementById("gameCanvas");
 const context = canvas.getContext("2d");
 
 
-
 const player = new Player("Blue");
 const enemy = new Mage("Chris Angel", 0.2);
 const enemy2 = new Bandit("Archer", 0.6);
@@ -19,7 +18,6 @@ const game = new Game(player, [enemy]);
 const startEvent = () => {
     game.start();
     game.state = "PLAYER_TURN"
-    console.log(game.state);
     canvas.removeEventListener("click", startEvent);
 }
 
@@ -30,36 +28,10 @@ const startScreen = () => {
 }
 
 
-
-// game.start();
-
-// initDeck(player);
-
-// player.useCard("Slash", enemy);
-// player.useCard("Slash", enemy2);
-
-// player.useCard("Chicken Leg", player);
-
-// enemy.buff(enemy2);
-// enemy2.anger();
-// enemy2.attack(player);
-
-// player.useCard("Chain Mail", enemy);
-
-// player.useCard("Chain Mail", player);
-
-// enemy.attack(player);
-
-
-
-// enemy.heal(enemy2);
-
-// player.displayStats();
-
 let printLog = "";
 
 const scale = window.devicePixelRatio;
-canvas.width = 800 * scale;
+canvas.width = 950 * scale;
 canvas.height = 600 * scale;
 context.scale(scale, scale);
 
@@ -68,8 +40,8 @@ export const logToPrint = (message) => {
   // canvasPrint();
 }
 
-const canvasPrint = () => {
-  addText(printLog, 220, 180)
+export const canvasPrint = () => {
+  addText(printLog, 230, 180)
 }
 
 
@@ -142,6 +114,7 @@ const displayNextTurn = () => {
 //   updateUI()
 // }
 
+
 canvas.addEventListener("click", (event) => {
   const x = event.offsetX;
   const y = event.offsetY;
@@ -149,11 +122,6 @@ canvas.addEventListener("click", (event) => {
   if (x >= 310 && x <= 410 && y >= 70 && y <= 100){
     game.endTurn();    
   }
-})
-
-canvas.addEventListener("click", (event) => {
-  const x = event.offsetX;
-  const y = event.offsetY;
 
   player.hand.forEach(card => {
     if (x >= card.pos.x && x <= card.pos.x + card.pos.width) {
@@ -176,12 +144,14 @@ export const updateUI = () => {
   displayNextTurn();
   canvasPrint();
   if (enemy.health <= 0) {
-    console.log(`${enemy.name} has been defeated`);
-  } else if (player.health <= 0) {
-    game.state = "GAME_OVER";
     clearUI();
-    addText("GAME OVER", 350, 200);
-    addText(`${player.name}'s cashed out at ${player.cash} money`, 300, 350);
+    addText(`${enemy.name} has been defeated`, 350, 200);
+    addText(`${player.name} has earned $5`, 350, 250);
+    player.cash += 5;
+    addText()
+  } else if (player.health <= 0) {
+    clearUI();
+    game.state = "GAME_OVER";
   }
 }
 

@@ -6,7 +6,7 @@ import { logToPrint } from "../main";
 export default class Player {
     constructor(name) {
         this.name = name;
-        this.health = 10;
+        this.health = 100;
         this.position = {x:0, y:0};
         this.armor = 0;
         this.deck = [];

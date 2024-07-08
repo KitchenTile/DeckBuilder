@@ -1,13 +1,14 @@
 //Create a game class to manage turn based logic
 
-import { updateUI } from "../main";
+import displayCard from "../cardVisual";
+import { canvasPrint, logToPrint, updateUI } from "../main";
 import { initDeck } from "./cards";
 
 export default class Game  {
     constructor(player, enemies) {
         this.player = player;
         this.enemies = enemies;
-        this.state = "START_GAME";
+        this.state = "";
     }
 
     start() {
@@ -15,6 +16,7 @@ export default class Game  {
         // this.loop();
         initDeck(this.player);
         updateUI();
+        displayCard(this.player.hand);
     }
 
     loop() {
@@ -57,6 +59,8 @@ export default class Game  {
 
     gameOver() {
         console.log("Game Over")
-        console.log(`${this.player.name}'s cashed out at: ${this.player.cash} money`)
+        console.log(`${this.player.name}'s cashed out at: ${this.player.cash} money`);
+        logToPrint(`GAME OVER - ${this.player.name} cashed out at ${this.player.cash} money`);
+        canvasPrint();
     }
 }

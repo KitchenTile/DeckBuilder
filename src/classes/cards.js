@@ -1,14 +1,18 @@
+import cardData from "../data/cardData";
 import { logToPrint } from "../main";
+
 
 // Create a Card class with a couple of properties I felt were appropriate.
 
 export class Card {
-    constructor(title, type, effect, legend, energyCost) {
+    constructor(title, type, effect, legend, energyCost, symbol, img) {
         this.title = title;
         this.type = type;
         this.effect = effect;
         this.legend = legend;
         this.energyCost = energyCost;
+        this.symbol = symbol;
+        this.img = img;
     }
 
 
@@ -19,8 +23,8 @@ export class Card {
                 logToPrint(`${this.title} used!`)
                 const random = Math.random();
                 if (random  >=  target.dodgeChance) { // if a random number between 0 and 1 is over or equal the enemies dodgeChance number, perform attack.
-                    target.health += this.effect;
-                    logToPrint(`${target.name} took ${this.effect * -1} damage`);
+                    target.health -= this.effect;
+                    logToPrint(`${target.name} took ${this.effect} damage`);
                 } else {
                     logToPrint(`${target.name} dodged the attack!`);
                 }
@@ -51,27 +55,9 @@ export class Card {
 }
 
 
-//Array of cards to add to the deck
- const cardData = [
-    {title: "Slash", type: "attack", effect: -10, legend: "A deadly slash", energyCost: 2},
-    {title: "Slash", type: "attack", effect: -10, legend: "A deadly slash", energyCost: 2},
-    {title: "Slash", type: "attack", effect: -10, legend: "A deadly slash", energyCost: 2},
-    {title: "Slash", type: "attack", effect: -10, legend: "A deadly slash", energyCost: 2},
-
-    {title: "Chain Mail", type: "defense", effect: 5, legend: "Prevents slashes", energyCost: 1},
-    {title: "Chain Mail", type: "defense", effect: 5, legend: "Prevents slashes", energyCost: 1},
-    {title: "Chain Mail", type: "defense", effect: 5, legend: "Prevents slashes", energyCost: 1},
-
-    {title: "Chicken Leg", type: "charger", effect: 3, legend: "A healthy dose of protein", energyCost: 1},
-    {title: "Chicken Leg", type: "charger", effect: 3, legend: "A healthy dose of protein", energyCost: 1},
-    
-    {title: "Fried Crickets", type: "charger", effect: 1, legend: "A fair dose of protein", energyCost: 0},
-    {title: "Fried Crickets", type: "charger", effect: 1, legend: "A fair dose of protein", energyCost: 0},
-];
-
 //Create cards based on the above array
 export const createCard = (cardInfo) => {
-    return new Card(cardInfo.title, cardInfo.type, cardInfo.effect, cardInfo.legend, cardInfo.energyCost);
+    return new Card(cardInfo.title, cardInfo.type, cardInfo.effect, cardInfo.legend, cardInfo.energyCost, cardInfo.symbol, cardInfo.img);
 }
 
 
@@ -84,4 +70,3 @@ export const initDeck = player => {
     player.displayDeck();
     player.getHand();
 }
-
