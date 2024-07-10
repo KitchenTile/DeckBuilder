@@ -1,4 +1,4 @@
-import { logToPrint } from "../main";
+import logToPrint from "../UI/displayLogs";
 
 //Create enemy class with some properties that will be inhereted by the differnet types of enemies
 export class Enemy {
@@ -6,7 +6,8 @@ export class Enemy {
         this.name = name;
         // this.position = position;
         this.dodgeChance = dodgeChance;
-        this.health = 50;
+        this.health = 10;
+        this.isAlive = true;
     }
 
     //Attack method that takes a target and manages the player armor and health
@@ -24,6 +25,7 @@ export class Enemy {
         }else {
             target.health -= this.damage;
             logToPrint(`${target.name} took ${this.damage} damage`)
+            // console.log(`${target.name} took ${this.damage} damage`)
         }
     }
 
@@ -38,8 +40,8 @@ export class Mage extends Enemy {
         super(name, dodgeChance);
         this.type = "Mage";
         this.damage = 5 + Math.floor(Math.random() * 3);
-        this.buffAbility = 20;
-        this.healAbility = 15;
+        this.buffAbility = 15;
+        this.healAbility = 10;
     }
 
     // Buff damage by 20%
@@ -81,12 +83,15 @@ export class Bandit extends Enemy {
 
     //buffs current damage by 50%
     anger() {
-        this.damage = Math.ceil(this.damage + this.damage * 0.5);
+        this.damage = Math.ceil(this.damage + this.damage * 0.2);
         logToPrint(`${this.name}'s damage increased to ${this.damage}!`);
+        // console.log(`${this.name}'s damage increased to ${this.damage}!`);
+
     }
 
-    turn() {
+    turn(target) {
         logToPrint(`${this.name}'s turn...`);
+        console.log(`${this.name}'s turn...`);
         const randomChoice = Math.random();
         if (randomChoice > 0.4) {
             this.anger();

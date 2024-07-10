@@ -1,7 +1,8 @@
 //Create a game class to manage turn based logic
 
-import displayCard from "../cardVisual";
-import { canvasPrint, logToPrint, updateUI } from "../main";
+import displayCard from "../UI/cardVisual";
+import logToPrint from "../UI/displayLogs";
+import { updateUI } from "../main";
 import { initDeck } from "./cards";
 
 export default class Game  {
@@ -16,7 +17,6 @@ export default class Game  {
         // this.loop();
         initDeck(this.player);
         updateUI();
-        displayCard(this.player.hand);
     }
 
     loop() {
@@ -42,7 +42,9 @@ export default class Game  {
 
     enemyTurn() {
         this.enemies.forEach(enemy => {
-            enemy.turn(this.player);
+            if (enemy.isAlive) {
+                enemy.turn(this.player);
+            }
         });
         this.state = "PLAYER_TURN"
         updateUI();
@@ -54,13 +56,52 @@ export default class Game  {
         this.player.discardHand();
         this.state = "ENEMY_TURN";
         updateUI();
-        this.loop()
+        this.loop();
     }
 
     gameOver() {
         console.log("Game Over")
         console.log(`${this.player.name}'s cashed out at: ${this.player.cash} money`);
         logToPrint(`GAME OVER - ${this.player.name} cashed out at ${this.player.cash} money`);
-        canvasPrint();
+    }
+
+    addEventListeners() {
+        let selectedCard
+        let selectedTarget
+
+        //wow! this is so badly written I can barely understand what it does!
+        // I'm gonna comment everything
+
+        this.player.hand.forEach((card, index) => {
+            const cardInstance = document.getElementById(`card_${index}`); //put card instances in a variable
+            cardInstance.addEventListener("click", () => { //if you click on a card then...
+                selectedCard = card; //select it
+                console.log(selectedCard);
+                if (selectedCard.type === "attack") { // if it's an attack then...
+                    this.enemies.forEach((enemy, index) => { //put enemy instances in a variable
+                        const enemyInstance = document.getElementById(`enemy_${index}`);
+                        enemyInstance.addEventListener("click", () => {
+                            if (enemy.isAlive) {
+                                selectedTarget = enemy; //select enemy by clicking on it
+                                console.log(selectedTarget);
+                                this.player.useCard(selectedCard.title, selectedTarget); // use the card on the selected enemy
+                                // displayCard(this.player.hand); //we call this again to update the div
+                                updateUI(); //and stats
+                                // this.addEventListeners(); // add event listeners again for the new div
+                            } else {
+                                console.log(`${enemy.name} can't be targeted! Try again`)
+                            }
+
+                        });
+                    })
+                } else { // if it's not an attack
+                    this.player.useCard(card.title, this.player) // use card on yourself
+                    // displayCard(this.player.hand);
+                    updateUI()
+                    // this.addEventListeners(); 
+                    // do the same as if it was an attack
+                }
+            })    
+        })
     }
 }

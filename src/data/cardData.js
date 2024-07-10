@@ -7,14 +7,14 @@ import HappyBlue from "../images/HappyBlue.png"
 //Array of cards to add to the deck
 
 const cardData = [
-    // {title: "Slash", type: "attack", effect: 10, legend: "A deadly slash.", symbol: "⚔", energyCost: 2, img: BaldElon},
-    // {title: "Slash", type: "attack", effect: 10, legend: "A deadly slash.", symbol: "⚔", energyCost: 2, img: BaldElon},
+    {title: "Slash", type: "attack", effect: 10, legend: "A deadly slash.", symbol: "⚔", energyCost: 2, img: BaldElon},
+    {title: "Slash", type: "attack", effect: 10, legend: "A deadly slash.", symbol: "⚔", energyCost: 2, img: BaldElon},
     {title: "Slash", type: "attack", effect: 10, legend: "A deadly slash.", symbol: "⚔", energyCost: 2, img: BaldElon},
     {title: "Slash", type: "attack", effect: 10, legend: "A deadly slash.", symbol: "⚔", energyCost: 2, img: BaldElon},
 
     {title: "Chain Mail", type: "defense", effect: 5, legend: "Prevents slashes.", symbol: "⛨", energyCost: 1, img: ComptentBlue},
     {title: "Chain Mail", type: "defense", effect: 5, legend: "Prevents slashes.", symbol: "⛨", energyCost: 1, img: ComptentBlue},
-    // {title: "Chain Mail", type: "defense", effect: 5, legend: "Prevents slashes.", symbol: "⛨", energyCost: 1, img: ComptentBlue},
+    {title: "Chain Mail", type: "defense", effect: 5, legend: "Prevents slashes.", symbol: "⛨", energyCost: 1, img: ComptentBlue},
 
     {title: "Chicken Leg", type: "charger", effect: 3, legend: "A healthy dose of protein.", symbol: "⛾", energyCost: 1, img: HappyBlue},
     {title: "Chicken Leg", type: "charger", effect: 3, legend: "A healthy dose of protein.", symbol: "⛾", energyCost: 1, img: HappyBlue},
