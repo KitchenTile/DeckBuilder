@@ -6,23 +6,133 @@ body {
   margin: 0;
   background-color: #282c34;
 }
-#gameCanvas {
-  border: 2px solid #fff;
-  height: 600px;
-  width: 1000px;
-}
 
 .gameDiv {
+  width: 1700px;
+  height: 1200px;
+  background-color: #335c40;
   display: flex;
   flex-direction: column; 
   align-items: center;
-  width: 1000px;
+  justify-content: space-between;
 }
 
-#card_body {
+.top_bit {
+    display: flex;
+    font-size: x-large;
+    color: white;
+    width: 100%;
+    height: 77.5%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-image: url("../src/images/Background.jpeg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+
+.stats {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+/* .models {
+  display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+} */
+
+.enemies {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#enemy {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  justify-content: space-around;
+}
+
+#enemy p{
+  margin: 0px;
+}
+
+#player_stats {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#player_stats p{
+  margin: 0px;
+}
+
+.bottomConsole {
+  display: flex;
+  flex-direction: row;
+  height: 23.5%;
+  width: 100%;
+  background-color: #5C4033;
+  border: solid;
+}
+
+#hand_container {
   display: flex; 
   justify-content: space-around;
-  background-color: rgb(19, 31, 65);
-  width: 1000px;
-  border: solid;
+  align-items: center;
+  /* background-color: rgb(19, 31, 65); */
+  background-color: #5C4033;
+  width: 75%;
+  border-style: solid;
+}
+
+#info {
+  display: flex;
+  width: 12.5%;
+  flex-direction: column;
+  align-items: center;
+  border-style: solid;
+  background-color: #5C4033;
+  justify-content: space-evenly;
+}
+
+#card_back {
+  border-radius: 10px;
+}
+
+#endButton {
+  height: 20%;
+  width: 100%;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+#deck {
+  cursor: pointer;
+  background-color: #5C4033;
+  margin: 10px;
+  padding: 10px;
+}
+
+#discard {
+  cursor: pointer;
+  background-color: #5C4033;
+  margin: 10px;
+  padding: 10px;
+}
+
+
+#card_back {
+  width: 12.5%;
 }
