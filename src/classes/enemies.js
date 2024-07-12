@@ -1,12 +1,14 @@
 import logToPrint from "../UI/displayLogs";
 
+
 //Create enemy class with some properties that will be inhereted by the differnet types of enemies
 export class Enemy {
     constructor(name, dodgeChance) {
         this.name = name;
         // this.position = position;
         this.dodgeChance = dodgeChance;
-        this.health = 10;
+        this.spawnHealth = 30 + Math.floor(Math.random() * 10); // starting health at 30-40 HP
+        this.health = this.spawnHealth; // this will keep track of the enemies health throughout the fight
         this.isAlive = true;
     }
 
@@ -28,9 +30,6 @@ export class Enemy {
             // console.log(`${target.name} took ${this.damage} damage`)
         }
     }
-
-    
-
 }
 
 
@@ -42,32 +41,50 @@ export class Mage extends Enemy {
         this.damage = 5 + Math.floor(Math.random() * 3);
         this.buffAbility = 15;
         this.healAbility = 10;
+        this.imgSrc = "../src/images/mage.png";
     }
 
     // Buff damage by 20%
     buff(target) {
+        console.log(target)
         target.damage = Math.ceil(target.damage + target.damage * this.buffAbility / 100); 
         logToPrint(`${target.name}'s damage increased to ${target.damage}!`);
+        console.log(`${target.name}'s damage increased to ${target.damage}!`);
     }
 
     //Heal 15HP
     heal(target) {
-        if (target.health + this.healAbility >= 50) {
-            target.health = 50;
+        if (target.health + this.healAbility >= this.spawnHealth) {
+            target.health = this.spawnHealth;
             logToPrint(`${this.name} healed ${target.name} back to full health`)
+            console.log(`${this.name} healed ${target.name} back to full health`)
+
         }  else {
             target.health += this.healAbility;
             logToPrint(`${this.name} healed ${target.name} for ${this.healAbility} HP`)
+            console.log(`${this.name} healed ${target.name} for ${this.healAbility} HP`)
+
         }
     }
 
-    turn(target) {
+
+    randomAlly(allies) { // grab the game.enemies list and pick a random one based on its length
+        const random = Math.floor(Math.random() * allies.length)
+        if (allies[random].isAlive && typeof allies[random] !== "undefined"){ // if the ally is alive
+            return allies[random]; //return ally
+        } else {
+            console.log("Can't use that on a dead ally")
+            return this.randomAlly(allies); // important to return else function always returns undefined
+        }
+    }
+
+    turn(allies, target) { // I added allies so i can use the mage methods in itself or others
         console.log(`${this.name}'s turn...`);
         const randomChoice = Math.random();
         if (randomChoice <= 0.3) {
-            this.heal(this);
+            this.heal(this.randomAlly(allies));
         } else if (0.3 < randomChoice && randomChoice <= 0.6) {
-            this.buff(this);
+            this.buff(this.randomAlly(allies));
         } else {
             this.attack(target);
         }
@@ -79,6 +96,7 @@ export class Bandit extends Enemy {
         super(name, dodgeChance) 
         this.damage = 10 + Math.floor(Math.random() * 6);
         this.type = "Fighter";
+        this.imgSrc = "../src/images/slime.png";
     }
 
     //buffs current damage by 50%
@@ -89,11 +107,11 @@ export class Bandit extends Enemy {
 
     }
 
-    turn(target) {
+    turn(allies = null, target) { // I set allies to null because bandit's only attack 
         logToPrint(`${this.name}'s turn...`);
         console.log(`${this.name}'s turn...`);
         const randomChoice = Math.random();
-        if (randomChoice > 0.4) {
+        if (randomChoice < 0.4) {
             this.anger();
         } else {
             this.attack(target);

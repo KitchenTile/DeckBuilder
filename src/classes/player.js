@@ -16,6 +16,7 @@ export default class Player {
         this.hand = [];
         this.handMax = 5;
         this.discardPile = [];
+        this.imgSrc = "../src/images/character.png";
     }
 
 

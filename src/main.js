@@ -10,9 +10,11 @@ import displayCard from "./UI/cardVisual";
 
 const player = new Player("Blue");
 const enemy = new Mage("Chris Angel", 0.2);
-const enemy2 = new Bandit("Archer", 0.6);
+const enemy2 = new Bandit("Slime", 0.4);
+const enemy3 = new Bandit("Slime 2", 0.4);
 
-const game = new Game(player, [enemy, enemy2]);
+
+const game = new Game(player, [enemy, enemy3, enemy2]);
 
 //In order to remove the click event listener I need to have the function not be anonymous  
 // const startEvent = () => {
@@ -28,21 +30,6 @@ const game = new Game(player, [enemy, enemy2]);
 // }
 
 
-// const scale = window.devicePixelRatio;
-// canvas.width = 950 * scale;
-// canvas.height = 600 * scale;
-// context.scale(scale, scale);
-
-// export const canvasPrint = () => {
-//   addText(printLog, 230, 180)
-// }
-
-
-// const addText = (text, x, y) => {
-//   context.fillStyle = "white";
-//   context.font = '16px Helvetica';
-//   context.fillText(text, x, y);
-// }
 
 document.getElementById("endButton").addEventListener("click", () => {
   game.endTurn()
@@ -61,9 +48,14 @@ export const updateUI = () => {
     if(enemy.health <= 0){
       enemy.isAlive = false
     }
-  });
+  })
+  if (game.player.health <= 0){
+    game.gameOver();
+  };
 }
 
 // startScreen();
 game.start()
 game.state = "PLAYER_TURN"
+
+export {game} 

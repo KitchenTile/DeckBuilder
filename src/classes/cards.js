@@ -20,7 +20,7 @@ export class Card {
     play(target) {
         switch (this.type){
             case "attack":
-                logToPrint(`${this.title} used!`)
+                console.log(`${this.title} used!`)
                 const random = Math.random();
                 if (random  >=  target.dodgeChance) { // if a random number between 0 and 1 is over or equal the enemies dodgeChance number, perform attack.
                     target.health -= this.effect;
