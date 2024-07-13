@@ -1,6 +1,4 @@
 //Create a game class to manage turn based logic
-
-import displayCard from "../UI/cardVisual";
 import logToPrint from "../UI/displayLogs";
 import { updateUI } from "../main";
 import { initDeck } from "./cards";
@@ -10,6 +8,26 @@ export default class Game  {
         this.player = player;
         this.enemies = enemies;
         this.state = "";
+    }
+
+    startScreen() {
+
+    }
+
+    winScreen(enemyList) { //function to update the cash and display message when all enemies are dead;
+        let deadCount = 0 //keep couont of the dead enemies
+        enemyList.forEach(enemy => {
+            if (!enemy.isAlive) {
+                deadCount += 1; 
+            }
+        })
+
+        if (deadCount === enemyList.length) { // if the deadcount is the same as the length of a list passed by (in fight enemy list), add cash and update UI
+            const cashPrize = 5 + Math.floor(Math.random() * 5);
+            this.player.cash += cashPrize;
+            logToPrint(`${this.player.name} won this fight, $${cashPrize} earned!`);
+            console.log(`${this.player.name} won this fight, $${cashPrize} earned!`);
+        }
     }
 
     start() {
@@ -100,6 +118,6 @@ export default class Game  {
                     // do the same as if it was an attack
                 }
             })    
-        })
-    }
+        })
+    }
 }

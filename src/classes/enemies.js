@@ -3,11 +3,10 @@ import logToPrint from "../UI/displayLogs";
 
 //Create enemy class with some properties that will be inhereted by the differnet types of enemies
 export class Enemy {
-    constructor(name, dodgeChance) {
+    constructor(name) {
         this.name = name;
         // this.position = position;
-        this.dodgeChance = dodgeChance;
-        this.spawnHealth = 30 + Math.floor(Math.random() * 10); // starting health at 30-40 HP
+        this.spawnHealth = 1 + Math.floor(Math.random() * 10); // starting health at 30-40 HP
         this.health = this.spawnHealth; // this will keep track of the enemies health throughout the fight
         this.isAlive = true;
     }
@@ -35,12 +34,13 @@ export class Enemy {
 
 //Two enemy subclasses with an unique method each
 export class Mage extends Enemy {
-    constructor(name, dodgeChance) {
-        super(name, dodgeChance);
+    constructor(name) {
+        super(name);
         this.type = "Mage";
         this.damage = 5 + Math.floor(Math.random() * 3);
         this.buffAbility = 15;
         this.healAbility = 10;
+        this.dodgeChance = 0.2;
         this.imgSrc = "../src/images/mage.png";
     }
 
@@ -92,10 +92,11 @@ export class Mage extends Enemy {
 }
 
 export class Bandit extends Enemy {
-    constructor (name, dodgeChance) {
-        super(name, dodgeChance) 
+    constructor (name) {
+        super(name) 
         this.damage = 10 + Math.floor(Math.random() * 6);
         this.type = "Fighter";
+        this.dodgeChance = 0.4;
         this.imgSrc = "../src/images/slime.png";
     }
 
@@ -115,6 +116,6 @@ export class Bandit extends Enemy {
             this.anger();
         } else {
             this.attack(target);
-        }
-    }
+        }
+    }
 }

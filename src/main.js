@@ -1,4 +1,3 @@
-
 import { initDeck } from "./classes/cards";
 import { Mage, Bandit } from "./classes/enemies";
 import Game from "./classes/game";
@@ -9,12 +8,22 @@ import {displayDiscardHTML, displayDeckHTML, displayScoreHTML} from "./UI/displa
 import displayCard from "./UI/cardVisual";
 
 const player = new Player("Blue");
-const enemy = new Mage("Chris Angel", 0.2);
-const enemy2 = new Bandit("Slime", 0.4);
-const enemy3 = new Bandit("Slime 2", 0.4);
+const enemy = new Mage("Chris Angel");
+const enemy2 = new Bandit("Slime");
+const enemy3 = new Bandit("Slime 2");
 
+const enemyList = [enemy, enemy2, enemy3]
 
-const game = new Game(player, [enemy, enemy3, enemy2]);
+const randomEnemies = () => { //function that decides how many enemies will be on a fight at random
+  const inFightEnemies = [];
+  const random = Math.floor(Math.random() * enemyList.length + 1)
+  for (let i = 0; i < random; i++) {
+      inFightEnemies.push(enemyList[i]);  
+  }
+  return inFightEnemies;
+}
+
+const game = new Game(player, randomEnemies());
 
 //In order to remove the click event listener I need to have the function not be anonymous  
 // const startEvent = () => {
@@ -52,10 +61,9 @@ export const updateUI = () => {
   if (game.player.health <= 0){
     game.gameOver();
   };
+  game.winScreen(game.enemies);
 }
 
 // startScreen();
 game.start()
 game.state = "PLAYER_TURN"
-
-export {game} 
