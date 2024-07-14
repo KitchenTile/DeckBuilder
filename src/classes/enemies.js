@@ -36,14 +36,14 @@ export class Enemy {
 
 //Two enemy subclasses with an unique method each
 export class Mage extends Enemy {
-    constructor(name) {
+    constructor(name, imgSrc) {
         super(name);
         this.type = "Mage";
         this.damage = 5 + Math.floor(Math.random() * 3);
         this.buffAbility = 15;
         this.healAbility = 10;
         this.dodgeChance = 0.2;
-        this.imgSrc = "../src/images/mage.png";
+        this.imgSrc = imgSrc ?? "../src/images/mage.png";
     }
 
     // Buff damage by 20%

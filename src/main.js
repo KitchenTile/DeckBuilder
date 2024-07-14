@@ -8,11 +8,12 @@ import {displayDiscardHTML, displayDeckHTML, displayScoreHTML} from "./UI/displa
 import displayCard from "./UI/cardVisual";
 
 const player = new Player("Blue");
-const enemy = new Mage("Chris Angel");
-const enemy2 = new Bandit("Slime");
-const enemy3 = new Bandit("Slime 2");
+const mage = new Mage("Chris Angel");
+const slime = new Bandit("Slime");
+const slime2 = new Bandit("Slime 2");
+const magicSlime = new Mage("Magic Slime", "/src/images/magic_slime.png");
 
-const enemyList = [enemy, enemy2, enemy3]
+const enemyList = [magicSlime, slime, mage]
 
 const randomEnemies = () => { //function that decides how many enemies will be on a fight at random
   const inFightEnemies = [];
@@ -56,6 +57,8 @@ export const updateUI = () => {
   game.enemies.forEach(enemy => {
     if(enemy.health <= 0){
       enemy.isAlive = false
+      enemy.health = 0
+      enemy.nextMove.move = "-"
     }
   })
   if (game.player.health <= 0){

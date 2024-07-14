@@ -23,7 +23,8 @@
     background-color: darkgreen;
 }
 .card_container.charger {
-    background-color: rgb(37, 37, 148)
+    background-color: rgb(37, 37, 148);
+    font-size: 9px;
 }
 
 .name_symbol{
