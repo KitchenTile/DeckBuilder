@@ -11,6 +11,7 @@ const displayEnemyStatsHTML = (game) => {
           <p>type: ${enemy.type}</p>
           <p>Health: ${enemy.health}</p>
           <p>Damage: ${enemy.damage}</p>
+          <p>Next move: ${enemy.nextMove.move}<p>
         </div>
         <img src= ${enemy.imgSrc} alt="img"/>
       </div>

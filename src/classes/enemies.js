@@ -6,11 +6,13 @@ export class Enemy {
     constructor(name) {
         this.name = name;
         // this.position = position;
-        this.spawnHealth = 1 + Math.floor(Math.random() * 10); // starting health at 30-40 HP
+        this.spawnHealth = 30 + Math.floor(Math.random() * 10); // starting health at 30-40 HP
         this.health = this.spawnHealth; // this will keep track of the enemies health throughout the fight
         this.isAlive = true;
+        this.nextMove = null;
     }
 
+    
     //Attack method that takes a target and manages the player armor and health
     attack(target) {
         if (target.armor > 0){
@@ -77,17 +79,47 @@ export class Mage extends Enemy {
             return this.randomAlly(allies); // important to return else function always returns undefined
         }
     }
+    
+    //StS has a feature where you're able to see the enemie's next move, here's how I did it
+    decideNextMove(allies, target) { 
+        const randomChoice = Math.random(); //basically execute "turn", but save the move and the target as an objext into a variable
+        if (randomChoice <= 0.3) {
+            this.nextMove = {move: "HEAL", target: this.randomAlly(allies)};
+        } else if (0.3 < randomChoice && randomChoice <= 0.6) {
+            this.nextMove = {move: "BUFF", target: this.randomAlly(allies)}
+        } else {
+            this.nextMove = {move: "ATTACK", target: target}
+        }
+    }
+
+    playNextMove() { // play the move that was decided in the function above
+        switch (this.nextMove.move){
+            case "HEAL":
+                this.heal(this.nextMove.target);
+                break;
+            case "BUFF":
+                this.buff(this.nextMove.target);
+                break;
+            case "ATTACK":
+                this.attack(this.nextMove.target);
+                break;
+        }
+    }
 
     turn(allies, target) { // I added allies so i can use the mage methods in itself or others
         console.log(`${this.name}'s turn...`);
-        const randomChoice = Math.random();
-        if (randomChoice <= 0.3) {
-            this.heal(this.randomAlly(allies));
-        } else if (0.3 < randomChoice && randomChoice <= 0.6) {
-            this.buff(this.randomAlly(allies));
-        } else {
-            this.attack(target);
-        }
+        // const randomChoice = Math.random();
+        // if (randomChoice <= 0.3) {
+        //     this.heal(this.randomAlly(allies));
+        //     this.nextMove = "HEAL";
+        // } else if (0.3 < randomChoice && randomChoice <= 0.6) {
+        //     this.buff(this.randomAlly(allies));
+        //     this.nextMove = "BUFF";
+        // } else {
+        //     this.attack(target);
+        //     this.nextMove = "ATTACK";
+        // }
+        this.decideNextMove(allies, target); //new turn method only decides the next move
     }
 }
 
@@ -108,14 +140,40 @@ export class Bandit extends Enemy {
 
     }
 
+
+    //does same as mage methods
+    decideNextMove(allies = null, target) {
+        const randomChoice = Math.random();
+        if (randomChoice < 0.4) {
+            this.nextMove = {move: "ANGER", target: this}
+        } else {
+            this.nextMove = {move: "ATTACK", target: target}
+        }
+    }
+
+    playNextMove() {
+        switch (this.nextMove.move){
+            case "ANGER":
+                this.anger();
+                break;
+            case "ATTACK":
+                this.attack(this.nextMove.target);
+                break;
+        }
+    }
+
     turn(allies = null, target) { // I set allies to null because bandit's only attack 
         logToPrint(`${this.name}'s turn...`);
         console.log(`${this.name}'s turn...`);
-        const randomChoice = Math.random();
-        if (randomChoice < 0.4) {
-            this.anger();
-        } else {
-            this.attack(target);
-        }
+    //     const randomChoice = Math.random();
+    //     if (randomChoice < 0.4) {
+    //         this.anger();
+    //         this.nextMove = "ANGER";
+    //     } else {
+    //         this.attack(target);
+    //         this.nextMove = "ATTACK";
+    //     }
+        this.decideNextMove(allies = null, target);
+
     }
 }

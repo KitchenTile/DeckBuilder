@@ -34,6 +34,9 @@ export default class Game  {
         this.state = "PLAYER_TURN";
         // this.loop();
         initDeck(this.player);
+        this.enemies.forEach(enemy => {
+            enemy.decideNextMove(this.enemies, this.player); // determine next enemy's first turn move
+        })
         updateUI();
     }
 
@@ -58,10 +61,13 @@ export default class Game  {
         updateUI();
     }
 
+
     enemyTurn() {
         this.enemies.forEach(enemy => {
             if (enemy.isAlive) {
-                enemy.turn(this.enemies, this.player);
+                //enemy.turn(this.enemies, this.player)
+                enemy.playNextMove();  //play move and determine next move to be executed in enemy's next turn
+                enemy.decideNextMove(this.enemies, this.player); 
             }
         });
         this.state = "PLAYER_TURN"
