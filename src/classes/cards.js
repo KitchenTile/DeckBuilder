@@ -1,7 +1,6 @@
 import cardData from "../data/cardData";
 import logToPrint from "../UI/displayLogs";
 
-
 // Create a Card class with a couple of properties I felt were appropriate.
 
 export class Card {

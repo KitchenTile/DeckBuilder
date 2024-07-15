@@ -7,6 +7,7 @@
     padding: 0.4%;
     border-radius: 10px;
     border-style: solid;
+    border-width: 2px;
     border-width: thick;
     border-color: black;
     font: 10px Arial, sans-serif;
@@ -70,3 +71,9 @@
 .card_container:hover {
     transform: scale(1.1);
 }
+
+@keyframes glow {
+    50% {border-color: yellow;} /* Use keframes to get the glowing animation instead of just changing the border color*/
+    /* 40%, 80% {border-color: black;} */
+}
+

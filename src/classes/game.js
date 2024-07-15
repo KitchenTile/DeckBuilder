@@ -89,6 +89,7 @@ export default class Game  {
         logToPrint(`GAME OVER - ${this.player.name} cashed out at ${this.player.cash} money`);
     }
 
+    //Need to re write this function it's too messy
     addEventListeners() {
         let selectedCard
         let selectedCardElement
@@ -98,10 +99,10 @@ export default class Game  {
             const cardInstance = document.getElementById(`card_${index}`); //put card instances in a variable
             cardInstance.addEventListener("click", () => { //if you click on a card then...
                 if (selectedCardElement) {
-                    selectedCardElement.style.border = ""; 
+                    selectedCardElement.style.animation = ""; 
                 }
                 selectedCardElement = cardInstance;
-                selectedCardElement.style.border = "2px solid yellow";
+                selectedCardElement.style.animation = "glow 2s infinite"; // this animation looks nicer than what I did before
                 
                 selectedCard = card; //select it a card, selecting an attack will give it a yellow border, if a card is selected, it takes the yellow border away from previous cards
 
