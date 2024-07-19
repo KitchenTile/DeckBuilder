@@ -57,7 +57,7 @@ export const updateUI = () => {
   game.enemies.forEach(enemy => {
     if(enemy.health <= 0){
       enemy.isAlive = false
-      enemy.health = 0
+      enemy.health = "☠"
       enemy.nextMove.move = "-"
     }
   })

@@ -84,23 +84,23 @@ export class Mage extends Enemy {
     decideNextMove(allies, target) { 
         const randomChoice = Math.random(); //basically execute "turn", but save the move and the target as an objext into a variable
         if (randomChoice <= 0.3) {
-            this.nextMove = {move: "HEAL", target: this.randomAlly(allies)};
+            this.nextMove = {move: "HEAL ⛨", target: this.randomAlly(allies)};
         } else if (0.3 < randomChoice && randomChoice <= 0.6) {
-            this.nextMove = {move: "BUFF", target: this.randomAlly(allies)}
+            this.nextMove = {move: "BUFF ⛓", target: this.randomAlly(allies)}
         } else {
-            this.nextMove = {move: "ATTACK", target: target}
+            this.nextMove = {move: "ATTACK ⚔", target: target}
         }
     }
 
     playNextMove() { // play the move that was decided in the function above
         switch (this.nextMove.move){
-            case "HEAL":
+            case "HEAL ⛨":
                 this.heal(this.nextMove.target);
                 break;
-            case "BUFF":
+            case "BUFF ⛓":
                 this.buff(this.nextMove.target);
                 break;
-            case "ATTACK":
+            case "ATTACK ⚔":
                 this.attack(this.nextMove.target);
                 break;
         }
@@ -145,18 +145,18 @@ export class Bandit extends Enemy {
     decideNextMove(allies = null, target) {
         const randomChoice = Math.random();
         if (randomChoice < 0.4) {
-            this.nextMove = {move: "ANGER", target: this}
+            this.nextMove = {move: "ANGER ♨", target: this}
         } else {
-            this.nextMove = {move: "ATTACK", target: target}
+            this.nextMove = {move: "ATTACK ⚔", target: target}
         }
     }
 
     playNextMove() {
         switch (this.nextMove.move){
-            case "ANGER":
+            case "ANGER ♨":
                 this.anger();
                 break;
-            case "ATTACK":
+            case "ATTACK ⚔":
                 this.attack(this.nextMove.target);
                 break;
         }

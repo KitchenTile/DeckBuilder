@@ -24,6 +24,7 @@ export default class Game  {
 
         if (deadCount === enemyList.length) { // if the deadcount is the same as the length of a list passed by (in fight enemy list), add cash and update UI
             const cashPrize = 5 + Math.floor(Math.random() * 5);
+            console.log(cashPrize)
             this.player.cash += cashPrize;
             logToPrint(`${this.player.name} won this fight, $${cashPrize} earned!`);
             console.log(`${this.player.name} won this fight, $${cashPrize} earned!`);
