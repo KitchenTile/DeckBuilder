@@ -1,28 +1,14 @@
 import { initDeck } from "./classes/cards";
 import { Mage, Bandit } from "./classes/enemies";
-import Game from "./classes/game";
+import { Game, randomEnemies } from "./classes/game";
 import Player from "./classes/player";
 import displayEnemyStatsHTML from "./UI/enemyStats";
 import displayPlayerStatsHTML from "./UI/playerStats";
 import {displayDiscardHTML, displayDeckHTML, displayScoreHTML} from "./UI/displayInfo"
 import displayCard from "./UI/cardVisual";
+import enemyData from "./data/enemyData";
 
 const player = new Player("Blue");
-const mage = new Mage("Chris Angel");
-const slime = new Bandit("Slime");
-const slime2 = new Bandit("Slime 2");
-const magicSlime = new Mage("Magic Slime", "/src/images/magic_slime.png");
-
-const enemyList = [magicSlime, slime, mage]
-
-const randomEnemies = () => { //function that decides how many enemies will be on a fight at random
-  const inFightEnemies = [];
-  const random = Math.floor(Math.random() * enemyList.length + 1)
-  for (let i = 0; i < random; i++) {
-      inFightEnemies.push(enemyList[i]);  
-  }
-  return inFightEnemies;
-}
 
 const game = new Game(player, randomEnemies());
 

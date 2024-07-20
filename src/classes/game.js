@@ -1,7 +1,9 @@
 //Create a game class to manage turn based logic
 import logToPrint from "../UI/displayLogs";
+import enemyData from "../data/enemyData";
 import { updateUI } from "../main";
 import { initDeck } from "./cards";
+import { Bandit, Mage } from "./enemies";
 
 export default class Game  {
     constructor(player, enemies) {
@@ -63,12 +65,10 @@ export default class Game  {
     }
 
 
-    enemyTurn() {
+    enemyTurn() { //for each enemy play their turn, switch to player turn and update the UI
         this.enemies.forEach(enemy => {
             if (enemy.isAlive) {
-                //enemy.turn(this.enemies, this.player)
-                enemy.playNextMove();  //play move and determine next move to be executed in enemy's next turn
-                enemy.decideNextMove(this.enemies, this.player); 
+                enemy.turn(this.enemies, this.player)
             }
         });
         this.state = "PLAYER_TURN"
@@ -129,3 +129,37 @@ export default class Game  {
         })
     }
 }
+
+//These functions were previously in main.js but I think they belong here
+
+//Grab the list of enemies and create a new list with enemy instances according to their type
+const enemyListGen = () => {
+    const enemyList = [];
+    enemyData.forEach(enemy => {
+    switch (enemy.type) {
+        case "Mage":
+        const mage = new Mage(enemy.name, enemy.img);
+        enemyList.push(mage);
+        break;
+        case "Bandit":
+        const bandit = new Bandit(enemy.name);
+        enemyList.push(bandit);
+    }
+    })
+    return enemyList;
+}
+
+const randomEnemies = () => { //function that decides how many enemies will be on a fight at random
+    const inFightEnemies = [];
+    const enemyList = enemyListGen();
+    const random = Math.floor(Math.random() * 3) + 1; //random number between 1 and 3 to avoid empty fights
+    for (let i = 0; i < random; i++) {
+    const randomEnemy = Math.floor(Math.random() * enemyList.length)
+        inFightEnemies.push(enemyList[randomEnemy]);  //Choose and push random enemy
+        enemyList.splice(enemyList[randomEnemy], 1); //Delete that enemy from the array so it can't get chosen again
+    }
+    return inFightEnemies;
+}
+
+
+export {Game, randomEnemies};

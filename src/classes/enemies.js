@@ -5,7 +5,6 @@ import logToPrint from "../UI/displayLogs";
 export class Enemy {
     constructor(name) {
         this.name = name;
-        // this.position = position;
         this.spawnHealth = 30 + Math.floor(Math.random() * 10); // starting health at 30-40 HP
         this.health = this.spawnHealth; // this will keep track of the enemies health throughout the fight
         this.isAlive = true;
@@ -32,7 +31,7 @@ export class Enemy {
         }
     }
 
-    decideNextMove(allies = null, target) { //basically execute "turn", but save the move and the target as an objext into a variable
+    decideNextMove(allies, target) { //basically execute "turn", but save the move and the target as an objext into a variable
         const randomChoice = Math.random();
         switch (this.type) {
             case "Mage":
@@ -76,9 +75,10 @@ export class Enemy {
         }
     }
 
-    //The turn method only decides what the next turn will do
-    turn(allies = null, target) {
+    //The turn method calls both move methods, first the play and then the decide for the next turn
+    turn(allies, target) {
         console.log(`${this.name}'s turn...`);
+        this.playNextMove();
         this.decideNextMove(allies, target); 
     }
 }

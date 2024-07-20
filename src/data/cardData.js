@@ -10,7 +10,7 @@ const cardData = [
     {title: "Slash", type: "attack", effect: 10, legend: "A deadly slash.", symbol: "⚔", energyCost: 2, img: BaldElon},
     {title: "Slash", type: "attack", effect: 10, legend: "A deadly slash.", symbol: "⚔", energyCost: 2, img: BaldElon},
     {title: "Slash", type: "attack", effect: 10, legend: "A deadly slash.", symbol: "⚔", energyCost: 2, img: BaldElon},
-    {title: "Slash", type: "attack", effect: 10, legend: "A deadly slash.", symbol: "⚔", energyCost: 2, img: BaldElon},
+    {title: "Lethal Blow", type: "attack", effect: 18, legend: "Huge boink.", symbol: "⚔", energyCost: 3, img: BaldElon},
 
     {title: "Chain Mail", type: "defense", effect: 5, legend: "Prevents slashes.", symbol: "⛨", energyCost: 1, img: ComptentBlue},
     {title: "Chain Mail", type: "defense", effect: 5, legend: "Prevents slashes.", symbol: "⛨", energyCost: 1, img: ComptentBlue},
