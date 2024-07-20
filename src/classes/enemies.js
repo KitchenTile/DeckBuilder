@@ -31,6 +31,56 @@ export class Enemy {
             // console.log(`${target.name} took ${this.damage} damage`)
         }
     }
+
+    decideNextMove(allies = null, target) { //basically execute "turn", but save the move and the target as an objext into a variable
+        const randomChoice = Math.random();
+        switch (this.type) {
+            case "Mage":
+                if (randomChoice <= 0.3) {
+                    this.nextMove = {move: "HEAL ⛨", target: this.randomAlly(allies)};
+                } else if (0.3 < randomChoice && randomChoice <= 0.6) {
+                    this.nextMove = {move: "BUFF ⇮", target: this.randomAlly(allies)}
+                } else {
+                    this.nextMove = {move: "ATTACK ⚔", target: target}
+                }
+                break;
+            case "Fighter":
+                if (randomChoice < 0.4) {
+                    this.nextMove = {move: "ANGER ♨", target: this}
+                } else {
+                    this.nextMove = {move: "ATTACK ⚔", target: target}
+                }
+                break;
+
+        }
+    }
+
+    playNextMove() { // play the move that was decided in the function above
+        switch (this.nextMove.move){
+            case "ANGER ♨":
+                this.anger();
+                console.log("anger")
+                break;
+            case "ATTACK ⚔":
+                this.attack(this.nextMove.target);
+                console.log("attack")
+                break;
+            case "HEAL ⛨":
+                this.heal(this.nextMove.target);
+                console.log("heal")
+                break;
+            case "BUFF ⇮":
+                this.buff(this.nextMove.target);
+                console.log("buff")
+                break;
+        }
+    }
+
+    //The turn method only decides what the next turn will do
+    turn(allies = null, target) {
+        console.log(`${this.name}'s turn...`);
+        this.decideNextMove(allies, target); 
+    }
 }
 
 
@@ -79,48 +129,6 @@ export class Mage extends Enemy {
             return this.randomAlly(allies); // important to return else function always returns undefined
         }
     }
-    
-    //StS has a feature where you're able to see the enemie's next move, here's how I did it
-    decideNextMove(allies, target) { 
-        const randomChoice = Math.random(); //basically execute "turn", but save the move and the target as an objext into a variable
-        if (randomChoice <= 0.3) {
-            this.nextMove = {move: "HEAL ⛨", target: this.randomAlly(allies)};
-        } else if (0.3 < randomChoice && randomChoice <= 0.6) {
-            this.nextMove = {move: "BUFF ⛓", target: this.randomAlly(allies)}
-        } else {
-            this.nextMove = {move: "ATTACK ⚔", target: target}
-        }
-    }
-
-    playNextMove() { // play the move that was decided in the function above
-        switch (this.nextMove.move){
-            case "HEAL ⛨":
-                this.heal(this.nextMove.target);
-                break;
-            case "BUFF ⛓":
-                this.buff(this.nextMove.target);
-                break;
-            case "ATTACK ⚔":
-                this.attack(this.nextMove.target);
-                break;
-        }
-    }
-
-    turn(allies, target) { // I added allies so i can use the mage methods in itself or others
-        console.log(`${this.name}'s turn...`);
-        // const randomChoice = Math.random();
-        // if (randomChoice <= 0.3) {
-        //     this.heal(this.randomAlly(allies));
-        //     this.nextMove = "HEAL";
-        // } else if (0.3 < randomChoice && randomChoice <= 0.6) {
-        //     this.buff(this.randomAlly(allies));
-        //     this.nextMove = "BUFF";
-        // } else {
-        //     this.attack(target);
-        //     this.nextMove = "ATTACK";
-        // }
-        this.decideNextMove(allies, target); //new turn method only decides the next move
-    }
 }
 
 export class Bandit extends Enemy {
@@ -139,41 +147,4 @@ export class Bandit extends Enemy {
         // console.log(`${this.name}'s damage increased to ${this.damage}!`);
 
     }
-
-
-    //does same as mage methods
-    decideNextMove(allies = null, target) {
-        const randomChoice = Math.random();
-        if (randomChoice < 0.4) {
-            this.nextMove = {move: "ANGER ♨", target: this}
-        } else {
-            this.nextMove = {move: "ATTACK ⚔", target: target}
-        }
-    }
-
-    playNextMove() {
-        switch (this.nextMove.move){
-            case "ANGER ♨":
-                this.anger();
-                break;
-            case "ATTACK ⚔":
-                this.attack(this.nextMove.target);
-                break;
-        }
-    }
-
-    turn(allies = null, target) { // I set allies to null because bandit's only attack 
-        logToPrint(`${this.name}'s turn...`);
-        console.log(`${this.name}'s turn...`);
-    //     const randomChoice = Math.random();
-    //     if (randomChoice < 0.4) {
-    //         this.anger();
-    //         this.nextMove = "ANGER";
-    //     } else {
-    //         this.attack(target);
-    //         this.nextMove = "ATTACK";
-    //     }
-        this.decideNextMove(allies = null, target);
-
-    }
 }
