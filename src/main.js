@@ -27,9 +27,9 @@ const game = new Game(player, randomEnemies());
 
 
 
-document.getElementById("endButton").addEventListener("click", () => {
-  game.endTurn()
-});
+// document.getElementById("endButton").addEventListener("click", () => {
+//   game.endTurn()
+// });
 
 
 export const updateUI = () => {
@@ -39,7 +39,12 @@ export const updateUI = () => {
   displayDiscardHTML(game);
   displayScoreHTML(game);
   displayCard(game.player.hand);
-  game.addEventListeners();
+  // game.endTurnEventListener();
+  if (game.state === "PLAYER_TURN") {
+    game.addEventListeners();
+    console.log("player turn");
+  }
+  game.mapEventListener();
   game.enemies.forEach(enemy => {
     if(enemy.health <= 0){
       enemy.isAlive = false
@@ -55,4 +60,4 @@ export const updateUI = () => {
 
 // startScreen();
 game.start()
-game.state = "PLAYER_TURN"
+// game.state = "PLAYER_TURN"

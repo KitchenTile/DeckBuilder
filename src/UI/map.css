@@ -1,0 +1,26 @@
+#map_container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .tile {
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    margin: 5px;
+    border: 2px solid black;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 100px; /* Center text vertically */
+    background-color: lightgray;
+    cursor: pointer;
+  }
+  
+  .current-tile {
+    border: 2px solid yellow;
+  }
+  
+  .completed-tile {
+    background-color: green;
+  }

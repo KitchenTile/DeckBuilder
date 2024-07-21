@@ -1,6 +1,8 @@
 //Create a game class to manage turn based logic
 import logToPrint from "../UI/displayLogs";
+import displayMap from "../UI/mapVisual";
 import enemyData from "../data/enemyData";
+import mapData from "../data/mapData";
 import { updateUI } from "../main";
 import { initDeck } from "./cards";
 import { Bandit, Mage } from "./enemies";
@@ -10,6 +12,7 @@ export default class Game  {
         this.player = player;
         this.enemies = enemies;
         this.state = "";
+        this.currentTile = 0; //new
     }
 
     startScreen() {
@@ -33,13 +36,15 @@ export default class Game  {
         }
     }
 
-    start() {
-        this.state = "PLAYER_TURN";
+    start() { //starts the fight by setting the game state to player turn, get's the deck initialized and gets the next enemy move selected
+        // this.state = "PLAYER_TURN";
         // this.loop();
+        this.endTurnEventListener();
         initDeck(this.player);
         this.enemies.forEach(enemy => {
             enemy.decideNextMove(this.enemies, this.player); // determine next enemy's first turn move
         })
+        displayMap(this.currentTile);
         updateUI();
     }
 
@@ -79,6 +84,7 @@ export default class Game  {
 
     endTurn() {
         this.player.discardHand();
+        console.log(1)
         this.state = "ENEMY_TURN";
         updateUI();
         this.loop();
@@ -125,9 +131,50 @@ export default class Game  {
                     updateUI()
                     // do the same as if it was an attack
                 }
-            })    
-        })
+            });    
+        });     
     }
+
+    mapEventListener() {
+        mapData.forEach((tile, index) => {
+            console.log("------------------MAP button listener added-----------------")
+
+            const tileInstance = document.getElementById(`tile_${index}`);
+            tileInstance.addEventListener("click", () => {
+                if (index === this.currentTile) {
+                    this.startFight();
+                }
+            });
+        });
+    }
+
+    endTurnEventListener() {
+        const endButton = document.getElementById("endButton");
+        console.log("------------------button listener added-----------------")
+
+        endButton.addEventListener("click", () => {
+            console.log("pressed button!!!!!!!!!!!!!")
+            this.endTurn()
+          });
+    }
+
+    startFight() {
+        console.log("Fight Started");
+        this.currentTile++;
+        this.updateMap();
+        this.state = "PLAYER_TURN"
+        updateUI();
+    }
+
+    updateMap() {
+        if (this.currentTile < mapData.length) {
+            mapData[this.currentTile - 1].completed = true;
+            displayMap(this.currentTile);
+            this.addEventListeners();
+        } else {
+            this.gameOver();
+        }
+    }
 }
 
 //These functions were previously in main.js but I think they belong here
