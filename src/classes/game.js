@@ -40,6 +40,8 @@ export default class Game {
             this.currentTile++; // go up a tile so we can move on to the next stage
             this.updateMap(); 
             this.removeAllEventListeners();
+
+            document.querySelector(".top_bit").style.background = "black";
         }
     }
 
@@ -165,33 +167,33 @@ export default class Game {
         if (this.selectedCardElement) {
             this.selectedCardElement.style.animation = ""; // explanation below
         }
-        this.selectedCardElement = cardInstance;
-        this.selectedCardElement.style.animation = "glow 2s infinite";
-        this.selectedCard = card;
+        this.selectedCardElement = cardInstance; //selected card element and selected card are technically the same, the difference is that we use 
+        this.selectedCardElement.style.animation = "glow 2s infinite"; // element for pointing at the element isntace to apply styling
+        this.selectedCard = card; //card to select the card object to play it, we use selected card for everything but styling
 
-        if (this.selectedCard.type === "attack") {
-            this.enemies.forEach((enemy, index) => {
-                const enemyInstance = document.getElementById(`enemy_${index}`);
-                const enemyHandler = () => this.handleEnemyClick(enemy);
-                enemyInstance.addEventListener("click", enemyHandler);
-                this.eventHandlers.enemy.push({ element: enemyInstance, handler: enemyHandler});
+        if (this.selectedCard.type === "attack") { //if the card is an attack
+            this.enemies.forEach((enemy, index) => { // for each enemy in the battle
+                const enemyInstance = document.getElementById(`enemy_${index}`); //asign it's element to a variable
+                const enemyHandler = () => this.handleEnemyClick(enemy); //get a handler function for selecting them
+                enemyInstance.addEventListener("click", enemyHandler); //add event handler for the element and function
+                this.eventHandlers.enemy.push({ element: enemyInstance, handler: enemyHandler}); // put both in the event handler object to keep track of active listeners
             });
         } else {
-            this.player.useCard(card.title, this.player);
+            this.player.useCard(card.title, this.player); // if it's not an attack use the card on self
             updateUI();
         }
     }
 
-    handleEnemyClick(enemy) {
+    handleEnemyClick(enemy) { //function we use to select an enemy
         if (enemy.isAlive) {
-            this.player.useCard(this.selectedCard.title, enemy);
+            this.player.useCard(this.selectedCard.title, enemy); //if it's alive then play the card on them
             updateUI();
         } else {
-            console.log(`${enemy.name} can't be targeted! Try again`);
+            console.log(`${enemy.name} can't be targeted! Try again`); // else display a message
         }
     }
 
-    handleTileClick(index) {
+    handleTileClick(index) { //function we use to start a fight if the map tile we click is the same as the tile we are in
         if (index === this.currentTile) {
             this.startFight();
         }
@@ -202,7 +204,7 @@ export default class Game {
         updateUI();
     }
 
-    updateMap() {
+    updateMap() { 
         if (this.currentTile < mapData.length) {
             mapData[this.currentTile - 1].completed = true;
             displayMap(this.currentTile);
@@ -212,7 +214,9 @@ export default class Game {
     }
 }
 
-// Functions for generating enemies
+// //These functions were previously in main.js but I think they belong here
+
+// //Grab the list of enemies and create a new list with enemy instances according to their type
 const enemyListGen = () => {
     const enemyList = [];
     enemyData.forEach((enemy) => {
@@ -229,73 +233,16 @@ const enemyListGen = () => {
     return enemyList;
 };
 
-const randomEnemies = () => {
+const randomEnemies = () => { //function that decides how many enemies will be on a fight at random
     const inFightEnemies = [];
     const enemyList = enemyListGen();
-    const random = Math.floor(Math.random() * 3) + 1;
+    const random = Math.floor(Math.random() * 3) + 1; //random number between 1 and 3 to avoid empty fights
     for (let i = 0; i < random; i++) {
         const randomEnemy = Math.floor(Math.random() * enemyList.length);
-        inFightEnemies.push(enemyList[randomEnemy]);
-        enemyList.splice(randomEnemy, 1);
+        inFightEnemies.push(enemyList[randomEnemy]); //Choose and push random enemy
+        enemyList.splice(randomEnemy, 1); //Delete that enemy from the array so it can't get chosen again
     }
     return inFightEnemies;
 };
 
 export { Game, randomEnemies };
-
-
-//     handleCardClick(event, cardInstance, card) { //we need event otherwise we get undefined error
-//         if (this.selectedCardElement) {
-//             this.selectedCardElement.style.animation = ""; // explanation below
-//         }
-//         this.selectedCardElement = cardInstance; 
-
-//         this.selectedCardElement.style.animation = "glow 2s infinite"; // this animation looks nicer than just a yellow border
-        
-//         this.selectedCard = card; //select it a card, selecting an attack will give it a yellow border, if a card is selected, it takes the yellow border away from previous cards
-
-//         if (this.selectedCard.type === "attack") { // if card is an attack then...
-//             this.enemies.forEach((enemy, index) => { //put enemy instances in a variable
-//                 const enemyInstance = document.getElementById(`enemy_${index}`);
-//                 enemyInstance.addEventListener("click", () => { //click an enemy 
-//                     this.handleEnemyClick(enemy);
-//                 });
-//             })
-//         } else { // if it's not an attack
-//             this.player.useCard(card.title, this.player) // use card on yourself
-//             updateUI() // update stats, cards and event listeners
-//         }
-//     }
-
-
-// //These functions were previously in main.js but I think they belong here
-
-// //Grab the list of enemies and create a new list with enemy instances according to their type
-// const enemyListGen = () => {
-//     const enemyList = [];
-//     enemyData.forEach(enemy => {
-//     switch (enemy.type) {
-//         case "Mage":
-//         const mage = new Mage(enemy.name, enemy.img);
-//         enemyList.push(mage);
-//         break;
-//         case "Bandit":
-//         const bandit = new Bandit(enemy.name);
-//         enemyList.push(bandit);
-//     }
-//     })
-//     return enemyList;
-// }
-
-// const randomEnemies = () => { //function that decides how many enemies will be on a fight at random
-//     const inFightEnemies = [];
-//     const enemyList = enemyListGen();
-//     const random = Math.floor(Math.random() * 3) + 1; //random number between 1 and 3 to avoid empty fights
-//     for (let i = 0; i < random; i++) {
-//     const randomEnemy = Math.floor(Math.random() * enemyList.length)
-//         inFightEnemies.push(enemyList[randomEnemy]);  //Choose and push random enemy
-//         enemyList.splice(enemyList[randomEnemy], 1); //Delete that enemy from the array so it can't get chosen again
-//     }
-//     return inFightEnemies;
-// }
-
