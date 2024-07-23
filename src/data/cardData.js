@@ -18,7 +18,7 @@ const cardData = [
 
     {title: "Chicken Leg", type: "charger", effect: 3, legend: "A healthy dose of protein.", symbol: "⛾", energyCost: 1, img: HappyBlue},
     {title: "Chicken Leg", type: "charger", effect: 3, legend: "A healthy dose of protein.", symbol: "⛾", energyCost: 1, img: HappyBlue},
-    
+
     {title: "Fried Crickets", type: "charger", effect: 1, legend: "A fair dose of protein.", symbol: "⛾", energyCost: 0, img: HappyBlue},
     {title: "Fried Crickets", type: "charger", effect: 1, legend: "A fair dose of protein.", symbol: "⛾", energyCost: 0, img: HappyBlue},
 ];

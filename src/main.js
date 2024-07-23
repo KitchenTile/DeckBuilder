@@ -10,6 +10,8 @@ import enemyData from "./data/enemyData";
 
 const player = new Player("Blue");
 
+
+
 const game = new Game(player, randomEnemies());
 
 //In order to remove the click event listener I need to have the function not be anonymous  
@@ -39,12 +41,7 @@ export const updateUI = () => {
   displayDiscardHTML(game);
   displayScoreHTML(game);
   displayCard(game.player.hand);
-  // game.endTurnEventListener();
-  if (game.state === "PLAYER_TURN") {
-    game.addEventListeners();
-    console.log("player turn");
-  }
-  game.mapEventListener();
+  game.addEventListeners();
   game.enemies.forEach(enemy => {
     if(enemy.health <= 0){
       enemy.isAlive = false
@@ -60,4 +57,5 @@ export const updateUI = () => {
 
 // startScreen();
 game.start()
-// game.state = "PLAYER_TURN"
+
+
