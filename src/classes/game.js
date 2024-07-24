@@ -15,10 +15,10 @@ export default class Game {
         this.enemies = enemies;
         this.state = "";
         this.currentTile = 0;
-        this.eventHandlers = { // after not being able to get the event listener removers right for hours I looked it up and found this solution
-            // I create an object to hold the event listener and the element that event listener is acting on. This way the game know exactly what and where
+        this.eventHandlers = { // after not being able to get the event listener removers right for hours, I looked it up and found this solution
+            // I create an object to hold the event listener and the element that event listener is acting on. This way the game knows exactly what and where
             // I'm referencing thigs
-            card: [], //these will get passed an object with the element being affected and the function that handles the interaction
+            card: [], //these will get passed to the object with the element being affected and the function that handles the interaction
             enemy: [], // when we want the interaction to be removed then we remove the event listeners with removeEventListeners() and we parse the empty object again
             tile: [],
             endButton: null, //This is the only way I can take the event listeners away and put them back properly every time I update the UI
@@ -41,7 +41,7 @@ export default class Game {
             this.updateMap(); 
             this.removeAllEventListeners();
 
-            document.querySelector(".top_bit").style.background = "black";
+            this.endScreen();
         }
     }
 
@@ -95,7 +95,17 @@ export default class Game {
     }
 
     gameOver() { //game over function currently only displays message 
+        this.endScreen();
         logToPrint(`GAME OVER - ${this.player.name} cashed out at ${this.player.cash} money`);
+    }
+
+    endScreen() {
+        // document.querySelector(".top_bit").style.background = "black";
+        document.querySelector(".top_bit").setAttribute("style", "flex-direction:row; background:black");
+        document.querySelector(".enemy_div").style.display = "none";
+        // document.querySelector("#logs").style.width = "100%";
+        document.querySelector("#logs").setAttribute("style", "font-size:40px;width:100%");
+        
     }
 
     addEventListeners() { // event listener adder function -- should probably re name it to avoid confusion?
@@ -196,6 +206,7 @@ export default class Game {
     handleTileClick(index) { //function we use to start a fight if the map tile we click is the same as the tile we are in
         if (index === this.currentTile) {
             this.startFight();
+            document.getElementById(`tile_${index}`).style.background = "yellow";
         }
     }
 
@@ -244,5 +255,10 @@ const randomEnemies = () => { //function that decides how many enemies will be o
     }
     return inFightEnemies;
 };
+
+const subsequentBattles = () => {
+    
+}
+
 
 export { Game, randomEnemies };
