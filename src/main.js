@@ -12,7 +12,15 @@ const player = new Player("Blue");
 
 
 
-const game = new Game(player, randomEnemies());
+let game = new Game(player, randomEnemies());
+
+const subsequentBattles = (player) => {
+  console.log("new game function called")
+  game = new Game(player, randomEnemies())
+  console.log(game.enemies)
+  game.start()
+  return game
+}
 
 //In order to remove the click event listener I need to have the function not be anonymous  
 // const startEvent = () => {
@@ -59,3 +67,4 @@ export const updateUI = () => {
 game.start()
 
 
+export default subsequentBattles;

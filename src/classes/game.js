@@ -5,9 +5,10 @@ import logToPrint from "../UI/displayLogs";
 import displayMap from "../UI/mapVisual";
 import enemyData from "../data/enemyData";
 import mapData from "../data/mapData";
-import { updateUI } from "../main";
+import subsequentBattles, { updateUI } from "../main";
 import { initDeck } from "./cards";
 import { Bandit, Mage } from "./enemies";
+
 
 export default class Game {
     constructor(player, enemies) {
@@ -38,10 +39,24 @@ export default class Game {
             this.player.cash += cashPrize; // add cash to the variable holding the cash
             logToPrint(`${this.player.name} won this fight, $${cashPrize} earned!`); //print a message to the screen
             this.currentTile++; // go up a tile so we can move on to the next stage
+            console.log(this.currentTile);
             this.updateMap(); 
             this.removeAllEventListeners();
-
+            //{** END SCREEN CALL **}
             this.endScreen();
+
+
+            // {** MAP TILES EVENT LISTENER **}  //adding an event listener after the battle is over allows us to click the next fight
+            mapData.forEach((_, index) => {
+                const tileInstance = document.getElementById(`tile_${index}`);
+                const tileHandler = () => this.handleTileClick(index);
+                if (this.currentTile === index) {
+                    tileInstance.addEventListener("click", tileHandler);
+                    this.eventHandlers.tile.push({ element: tileInstance, handler: tileHandler });
+                }
+
+                console.log(this.eventHandlers.tile)
+            });
         }
     }
 
@@ -70,6 +85,7 @@ export default class Game {
     }
 
     playerTurn() { // fuction that gets called every time it's the players turn, it resets the hand, armor and energy
+        console.log("NEW PLAYER TURN")
         this.player.armor = 0;
         this.player.energy = 3;
         this.player.getHand();
@@ -99,14 +115,29 @@ export default class Game {
         logToPrint(`GAME OVER - ${this.player.name} cashed out at ${this.player.cash} money`);
     }
 
-    endScreen() {
+    endScreen() { // Change the div's styling to display the logs in the middle of the screen in a larger font
         // document.querySelector(".top_bit").style.background = "black";
-        document.querySelector(".top_bit").setAttribute("style", "flex-direction:row; background:black");
-        document.querySelector(".enemy_div").style.display = "none";
+        document.querySelector(".top_bit").setAttribute("style", "flex-direction:row; background:black"); // I use .setAttribute instead of .style because flex-drection doesn't work with .style
+        document.querySelector("#enemy").style.display = "none";
         // document.querySelector("#logs").style.width = "100%";
         document.querySelector("#logs").setAttribute("style", "font-size:40px;width:100%");
         
     }
+
+
+    newGameScreen() { // Change the div's styling to display the logs in the middle of the screen in a larger font
+        // document.querySelector(".top_bit").style.background = "black";
+        document.querySelector(".top_bit").setAttribute("style", "flex-direction:column; background-image: url('../src/images/Background.jpeg'); flex-direction: column; background-repeat: no-repeat; background-size: 100%; align-items: center;"); // I use .setAttribute instead of .style because flex-drection doesn't work with .style
+        document.querySelector("#enemy").style.display = "flex";
+        // document.querySelector("#logs").style.width = "100%";
+        document.querySelector("#logs").setAttribute("style", "font-size:24px;");
+        
+    }
+
+    
+
+
+    
 
     addEventListeners() { // event listener adder function -- should probably re name it to avoid confusion?
         this.removeAllEventListeners(); //remove all event listeners in place, since this function gets called every time the UI updates
@@ -142,7 +173,7 @@ export default class Game {
                 const tileHandler = () => this.handleTileClick(index);
                 tileInstance.addEventListener("click", tileHandler);
                 this.eventHandlers.tile.push({ element: tileInstance, handler: tileHandler });
-                // console.log(this.eventHandlers.tile)
+                console.log(tileInstance)
             });
         }
     }
@@ -206,16 +237,22 @@ export default class Game {
     handleTileClick(index) { //function we use to start a fight if the map tile we click is the same as the tile we are in
         if (index === this.currentTile) {
             this.startFight();
+            console.log("tile clicked")
+            console.log(index)
             document.getElementById(`tile_${index}`).style.background = "yellow";
+            if (index >= 1) {
+                subsequentBattles(this.player)
+                this.newGameScreen()
+            }
         }
     }
 
-    startFight() {
+    startFight() { //start the fight by switching the game state
         this.state = "PLAYER_TURN";
         updateUI();
     }
 
-    updateMap() { 
+    updateMap() {  //update map work i n progress
         if (this.currentTile < mapData.length) {
             mapData[this.currentTile - 1].completed = true;
             displayMap(this.currentTile);
@@ -256,9 +293,7 @@ const randomEnemies = () => { //function that decides how many enemies will be o
     return inFightEnemies;
 };
 
-const subsequentBattles = () => {
-    
-}
+
 
 
 export { Game, randomEnemies };
