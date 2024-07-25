@@ -34,47 +34,45 @@ export default class Game {
         });
 
         if (deadCount === enemyList.length) { //if dead enemies is equal to the length of the enemy list (meaning all enemies are dead)
-            console.log(`dead count: ${deadCount}`)
-            deadCount = 0
             const cashPrize = 5 + Math.floor(Math.random() * 5); // generate a random amount between 5 and 9
             this.player.cash += cashPrize; // add cash to the variable holding the cash
             console.log("ALL ENEMIES DEAD, GOING TO THE NEXT TILE")
-            console.log(`enemy count: ${enemyList.length}`)
-            console.log(enemyList)
             logToPrint(`${this.player.name} won this fight, $${cashPrize} earned!`); //print a message to the screen
             this.player.currentTile++; // go up a tile so we can move on to the next stage
-            console.log(`Current tile: ${this.player.currentTile}`);
             this.updateMap(); 
             this.removeAllEventListeners();
 
             //{** END SCREEN CALL **}
-            this.endScreen();
+            this.screenDisplay("endScreen");
 
 
             // {** MAP TILES EVENT LISTENER **}  //adding an event listener after the battle is over allows us to click the next fight
-            mapData.forEach((_, index) => {
-                const tileInstance = document.getElementById(`tile_${index}`);
-                const tileHandler = () => this.handleTileClick(index);
-                if (this.player.currentTile === index) {
-                    tileInstance.addEventListener("click", tileHandler);
-                    this.eventHandlers.tile.push({ element: tileInstance, handler: tileHandler });
-                }
-
-                console.log(this.eventHandlers.tile)
-            });
+            this.addMapEventListeners();
         }
     }
 
     start() { //fucntion run at the start of the game
+        console.log("game Started")
+        this.restartDeck();
         initDeck(this.player); //get a deck for player
         this.enemies.forEach((enemy) => {
             enemy.decideNextMove(this.enemies, this.player); // for each enemy in battle decide next move
         });
-        displayMap(this.player.currentTile);
+        displayMap(this.player.currentTile); // display map, needs some fixing
         this.addEventListeners();
-        updateUI(this);
-        this.playerTurn();
+        updateUI();
+        if (this.player.currentTile > 0) { //I have to add this here because if I don't the state doesn't change after I select a new tile
+            this.state = "PLAYER_TURN"
+        }
 
+        this.playerTurn(); //This doesn't work like i'd like to
+
+    }
+
+    restartDeck() { // fuction that resets the deck hand and discad pile so cards don't stack up after every fight
+        this.player.deck = [];
+        this.player.hand = [];
+        this.player.discardPile = []; 
     }
 
     loop() { //loop function to keep turns and event handlers on check
@@ -96,7 +94,7 @@ export default class Game {
         this.player.armor = 0;
         this.player.energy = 3;
         this.player.getHand();
-        updateUI(this);
+        updateUI();
     }
 
     enemyTurn() { //function that gets called after the player's turn finishes
@@ -106,45 +104,38 @@ export default class Game {
             }
         });
         this.state = "PLAYER_TURN"; //and go back to player's turn function
-        updateUI(this);
+        updateUI();
         this.loop();
     }
 
     endTurn() { //function that plays after the player hits the end turn button, discards hand and sets the turn to enemy
         this.player.discardHand();
         this.state = "ENEMY_TURN";
-        updateUI(this);
+        updateUI();
         this.loop();
     }
 
     gameOver() { //game over function currently only displays message 
-        this.endScreen();
+        this.screenDisplay("endScreen");
         logToPrint(`GAME OVER - ${this.player.name} cashed out at ${this.player.cash} money`);
     }
 
-    endScreen() { // Change the div's styling to display the logs in the middle of the screen in a larger font
-        // document.querySelector(".top_bit").style.background = "black";
-        document.querySelector(".top_bit").setAttribute("style", "flex-direction:row; background:black"); // I use .setAttribute instead of .style because flex-drection doesn't work with .style
-        document.querySelector("#enemy").style.display = "none";
-        // document.querySelector("#logs").style.width = "100%";
-        document.querySelector("#logs").setAttribute("style", "font-size:40px;width:100%");
-        
+    screenDisplay(state) { 
+        switch (state) {
+            case "endScreen": // Change the div's styling to display the logs in the middle of the screen in a larger font
+                document.querySelector(".top_bit").setAttribute("style", "flex-direction:row; background:black"); // I use .setAttribute instead of .style because flex-drection doesn't work with .style
+                document.querySelector("#enemy").style.display = "none";
+                document.querySelector("#logs").setAttribute("style", "font-size:40px;width:100%");
+                break;
+            case "restartScreen": // Change the div's styling to undo endScreen changes
+                document.querySelector(".top_bit").setAttribute("style", "flex-direction:column; background-image: url('../src/images/Background.jpeg'); flex-direction: column; background-repeat: no-repeat; background-size: 100%; align-items: center;");
+                document.querySelector("#enemy").style.display = "flex";
+                document.querySelector("#logs").setAttribute("style", "font-size:24px;");
+
+        }
+
     }
-
-
-    newGameScreen() { // Change the div's styling to display the logs in the middle of the screen in a larger font
-        // document.querySelector(".top_bit").style.background = "black";
-        document.querySelector(".top_bit").setAttribute("style", "flex-direction:column; background-image: url('../src/images/Background.jpeg'); flex-direction: column; background-repeat: no-repeat; background-size: 100%; align-items: center;"); // I use .setAttribute instead of .style because flex-drection doesn't work with .style
-        document.querySelector("#enemy").style.display = "flex";
-        // document.querySelector("#logs").style.width = "100%";
-        document.querySelector("#logs").setAttribute("style", "font-size:24px;");
-        
-    }
-
-    
-
-
-    
+ 
 
     addEventListeners() { // event listener adder function -- should probably re name it to avoid confusion?
         this.removeAllEventListeners(); //remove all event listeners in place, since this function gets called every time the UI updates
@@ -155,6 +146,7 @@ export default class Game {
             // i.e when the battle is over 
 
             // {** CARDS EVENT LISTENER **}
+            console.log("event listeners added")
             this.player.hand.forEach((card, index) => { //for each card in the player's hand
                 const cardInstance = document.getElementById(`card_${index}`); //get the DOM element in a variable
                 const cardHandler = (event) => this.handleCardClick(event, cardInstance, card); // put the handler function in a variable
@@ -175,14 +167,18 @@ export default class Game {
         } else {
 
             // {** MAP TILES EVENT LISTENER **}
-            mapData.forEach((_, index) => { //same thing with card
-                const tileInstance = document.getElementById(`tile_${index}`);
-                const tileHandler = () => this.handleTileClick(index);
-                tileInstance.addEventListener("click", tileHandler);
-                this.eventHandlers.tile.push({ element: tileInstance, handler: tileHandler });
-                console.log(tileInstance)
-            });
+            this.addMapEventListeners();
         }
+    }
+
+    addMapEventListeners() {
+        mapData.forEach((_, index) => { //same thing with card
+            const tileInstance = document.getElementById(`tile_${index}`);
+            const tileHandler = () => this.handleTileClick(index);
+            tileInstance.addEventListener("click", tileHandler);
+            this.eventHandlers.tile.push({ element: tileInstance, handler: tileHandler });
+            console.log(tileInstance)
+        });
     }
 
     removeAllEventListeners() { // function to remove all event listeners
@@ -228,14 +224,14 @@ export default class Game {
             });
         } else {
             this.player.useCard(card.title, this.player); // if it's not an attack use the card on self
-            updateUI(this);
+            updateUI();
         }
     }
 
     handleEnemyClick(enemy) { //function we use to select an enemy
         if (enemy.isAlive) {
             this.player.useCard(this.selectedCard.title, enemy); //if it's alive then play the card on them
-            updateUI(this);
+            updateUI();
         } else {
             console.log(`${enemy.name} can't be targeted! Try again`); // else display a message
         }
@@ -243,21 +239,28 @@ export default class Game {
 
     handleTileClick(index) { //function we use to start a fight if the map tile we click is the same as the tile we are in
         if (index === this.player.currentTile) {
-            this.startFight();
+            if (index === 0) {
+                this.startFight();
+            }
             console.log("tile clicked")
-            console.log("Current Tile" + index)
+            console.log("Current Tile " + index)
 
             document.getElementById(`tile_${index}`).style.background = "yellow";
-            if (index >= 1) {
+            if (index > 0) {
+                // document.getElementById(`tile_${index}`).style.background = "yellow";
                 subsequentBattles(this.player)
-                this.newGameScreen()
+                this.screenDisplay("restartScreen")
+                this.startFight();
             }
         }
     }
 
     startFight() { //start the fight by switching the game state
         this.state = "PLAYER_TURN";
-        updateUI(this);
+        console.log(this.state)
+        updateUI();
+        console.log("Start fight")
+
     }
 
     updateMap() {  //update map work i n progress
