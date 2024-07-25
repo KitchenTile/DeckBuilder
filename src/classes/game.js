@@ -15,7 +15,6 @@ export default class Game {
         this.player = player;
         this.enemies = enemies;
         this.state = "";
-        this.currentTile = 0;
         this.eventHandlers = { // after not being able to get the event listener removers right for hours, I looked it up and found this solution
             // I create an object to hold the event listener and the element that event listener is acting on. This way the game knows exactly what and where
             // I'm referencing thigs
@@ -35,13 +34,19 @@ export default class Game {
         });
 
         if (deadCount === enemyList.length) { //if dead enemies is equal to the length of the enemy list (meaning all enemies are dead)
+            console.log(`dead count: ${deadCount}`)
+            deadCount = 0
             const cashPrize = 5 + Math.floor(Math.random() * 5); // generate a random amount between 5 and 9
             this.player.cash += cashPrize; // add cash to the variable holding the cash
+            console.log("ALL ENEMIES DEAD, GOING TO THE NEXT TILE")
+            console.log(`enemy count: ${enemyList.length}`)
+            console.log(enemyList)
             logToPrint(`${this.player.name} won this fight, $${cashPrize} earned!`); //print a message to the screen
-            this.currentTile++; // go up a tile so we can move on to the next stage
-            console.log(this.currentTile);
+            this.player.currentTile++; // go up a tile so we can move on to the next stage
+            console.log(`Current tile: ${this.player.currentTile}`);
             this.updateMap(); 
             this.removeAllEventListeners();
+
             //{** END SCREEN CALL **}
             this.endScreen();
 
@@ -50,7 +55,7 @@ export default class Game {
             mapData.forEach((_, index) => {
                 const tileInstance = document.getElementById(`tile_${index}`);
                 const tileHandler = () => this.handleTileClick(index);
-                if (this.currentTile === index) {
+                if (this.player.currentTile === index) {
                     tileInstance.addEventListener("click", tileHandler);
                     this.eventHandlers.tile.push({ element: tileInstance, handler: tileHandler });
                 }
@@ -65,9 +70,11 @@ export default class Game {
         this.enemies.forEach((enemy) => {
             enemy.decideNextMove(this.enemies, this.player); // for each enemy in battle decide next move
         });
-        displayMap(this.currentTile);
+        displayMap(this.player.currentTile);
         this.addEventListeners();
-        updateUI();
+        updateUI(this);
+        this.playerTurn();
+
     }
 
     loop() { //loop function to keep turns and event handlers on check
@@ -89,7 +96,7 @@ export default class Game {
         this.player.armor = 0;
         this.player.energy = 3;
         this.player.getHand();
-        updateUI();
+        updateUI(this);
     }
 
     enemyTurn() { //function that gets called after the player's turn finishes
@@ -99,14 +106,14 @@ export default class Game {
             }
         });
         this.state = "PLAYER_TURN"; //and go back to player's turn function
-        updateUI();
+        updateUI(this);
         this.loop();
     }
 
     endTurn() { //function that plays after the player hits the end turn button, discards hand and sets the turn to enemy
         this.player.discardHand();
         this.state = "ENEMY_TURN";
-        updateUI();
+        updateUI(this);
         this.loop();
     }
 
@@ -168,7 +175,7 @@ export default class Game {
         } else {
 
             // {** MAP TILES EVENT LISTENER **}
-            mapData.forEach((_, index) => {
+            mapData.forEach((_, index) => { //same thing with card
                 const tileInstance = document.getElementById(`tile_${index}`);
                 const tileHandler = () => this.handleTileClick(index);
                 tileInstance.addEventListener("click", tileHandler);
@@ -221,24 +228,25 @@ export default class Game {
             });
         } else {
             this.player.useCard(card.title, this.player); // if it's not an attack use the card on self
-            updateUI();
+            updateUI(this);
         }
     }
 
     handleEnemyClick(enemy) { //function we use to select an enemy
         if (enemy.isAlive) {
             this.player.useCard(this.selectedCard.title, enemy); //if it's alive then play the card on them
-            updateUI();
+            updateUI(this);
         } else {
             console.log(`${enemy.name} can't be targeted! Try again`); // else display a message
         }
     }
 
     handleTileClick(index) { //function we use to start a fight if the map tile we click is the same as the tile we are in
-        if (index === this.currentTile) {
+        if (index === this.player.currentTile) {
             this.startFight();
             console.log("tile clicked")
-            console.log(index)
+            console.log("Current Tile" + index)
+
             document.getElementById(`tile_${index}`).style.background = "yellow";
             if (index >= 1) {
                 subsequentBattles(this.player)
@@ -249,13 +257,13 @@ export default class Game {
 
     startFight() { //start the fight by switching the game state
         this.state = "PLAYER_TURN";
-        updateUI();
+        updateUI(this);
     }
 
     updateMap() {  //update map work i n progress
-        if (this.currentTile < mapData.length) {
-            mapData[this.currentTile - 1].completed = true;
-            displayMap(this.currentTile);
+        if (this.player.currentTile < mapData.length) {
+            mapData[this.player.currentTile - 1].completed = true;
+            displayMap(this.player.currentTile);
         } else {
             this.gameOver();
         }

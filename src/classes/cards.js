@@ -66,6 +66,6 @@ export const initDeck = player => {
         let newCard = createCard(card);
         player.addToDeck(newCard);
     })
-    player.displayDeck();
-    player.getHand();
+    // player.displayDeck();
+    // player.getHand();
 }

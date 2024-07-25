@@ -11,8 +11,8 @@
     border-width: thick;
     border-color: black;
     font: 10px Arial, sans-serif;
-    width: 180px; 
-    height: 270px;
+    width: 150px; 
+    height: 220px;
     box-sizing: border-box;
     cursor: pointer;
 }

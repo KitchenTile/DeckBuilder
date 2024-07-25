@@ -7,7 +7,7 @@ export default class Player {
     constructor(name) {
         this.name = name;
         this.health = 100;
-        this.position = {x:0, y:0};
+        this.currentTile = 0;
         this.armor = 0;
         this.deck = [];
         this.cash = 0;
@@ -78,12 +78,12 @@ export default class Player {
                 this.discardPile.forEach(card => {
                     this.deck.push(card);
                 })
-                this.displayDeck();
+                // this.displayDeck();
                 this.discardPile = [];
             }
         }
-        this.displayDeck();
-        this.displayHand();
+        // this.displayDeck();
+        // this.displayHand();
     }
 
     discardHand() {
