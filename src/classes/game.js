@@ -5,7 +5,7 @@ import logToPrint from "../UI/displayLogs";
 import displayMap from "../UI/mapVisual";
 import enemyData from "../data/enemyData";
 import mapData from "../data/mapData";
-import subsequentBattles, { updateUI } from "../main";
+import { updateUI, subsequentBattles } from "../main";
 import { initDeck } from "./cards";
 import { Bandit, Mage } from "./enemies";
 
@@ -39,8 +39,9 @@ export default class Game {
             console.log("ALL ENEMIES DEAD, GOING TO THE NEXT TILE")
             logToPrint(`${this.player.name} won this fight, $${cashPrize} earned!`); //print a message to the screen
             this.player.currentTile++; // go up a tile so we can move on to the next stage
-            this.updateMap(); 
             this.removeAllEventListeners();
+            this.updateMap(); // ---- REMOVE NEXT TIME WE ADD AN UPDATE UI BEFORE CLICKING ON A TILE ----
+            // updateUI();
 
             //{** END SCREEN CALL **}
             this.screenDisplay("endScreen");
@@ -52,13 +53,16 @@ export default class Game {
     }
 
     start() { //fucntion run at the start of the game
-        console.log("game Started")
+        // console.log("game Started")
+        // console.log(`${this.state}`)
         this.restartDeck();
         initDeck(this.player); //get a deck for player
         this.enemies.forEach((enemy) => {
             enemy.decideNextMove(this.enemies, this.player); // for each enemy in battle decide next move
         });
-        displayMap(this.player.currentTile); // display map, needs some fixing
+        if (this.player.currentTile === 0) {
+            displayMap(this.player.currentTile); // display map, needs some fixing
+        }
         this.addEventListeners();
         updateUI();
         if (this.player.currentTile > 0) { //I have to add this here because if I don't the state doesn't change after I select a new tile
@@ -90,7 +94,7 @@ export default class Game {
     }
 
     playerTurn() { // fuction that gets called every time it's the players turn, it resets the hand, armor and energy
-        console.log("NEW PLAYER TURN")
+        // console.log("NEW PLAYER TURN")
         this.player.armor = 0;
         this.player.energy = 3;
         this.player.getHand();
@@ -146,7 +150,7 @@ export default class Game {
             // i.e when the battle is over 
 
             // {** CARDS EVENT LISTENER **}
-            console.log("event listeners added")
+            // console.log("event listeners added")
             this.player.hand.forEach((card, index) => { //for each card in the player's hand
                 const cardInstance = document.getElementById(`card_${index}`); //get the DOM element in a variable
                 const cardHandler = (event) => this.handleCardClick(event, cardInstance, card); // put the handler function in a variable
@@ -162,9 +166,8 @@ export default class Game {
             const endTurnHandler = () => this.endTurn();
             endButton.addEventListener("click", endTurnHandler);
             this.eventHandlers.endButton = { element: endButton, handler: endTurnHandler };
-            // console.log(this.eventHandlers.endButton)
 
-        } else {
+        } else{
 
             // {** MAP TILES EVENT LISTENER **}
             this.addMapEventListeners();
@@ -177,7 +180,7 @@ export default class Game {
             const tileHandler = () => this.handleTileClick(index);
             tileInstance.addEventListener("click", tileHandler);
             this.eventHandlers.tile.push({ element: tileInstance, handler: tileHandler });
-            console.log(tileInstance)
+            // console.log("Tile instance added")
         });
     }
 
@@ -238,38 +241,53 @@ export default class Game {
     }
 
     handleTileClick(index) { //function we use to start a fight if the map tile we click is the same as the tile we are in
-        if (index === this.player.currentTile) {
-            if (index === 0) {
-                this.startFight();
-            }
-            console.log("tile clicked")
-            console.log("Current Tile " + index)
 
-            document.getElementById(`tile_${index}`).style.background = "yellow";
-            if (index > 0) {
-                // document.getElementById(`tile_${index}`).style.background = "yellow";
-                subsequentBattles(this.player)
-                this.screenDisplay("restartScreen")
-                this.startFight();
+        if (index === this.player.currentTile) { // When we click on the tile we're supposed to it turns yellow indicating it's the current fight
+            document.querySelector(`#tile_${index}`).style.background = "yellow";
+
+            if (index === 0) {
+                this.startFight(); //I need to add this here because when we start the first fight there's already a battle started
+            }
+
+            if (index > 0) { // everytime we click an other tile then
+                subsequentBattles(this.player) //start a new game instance
+                this.screenDisplay("restartScreen") //switch the screen display 
+                this.startFight(); //start the battle
+                this.eventHandlers.tile.forEach(({ element, handler }) => { // For some reason I need to remove left over event handlers
+                    element.removeEventListener("click", handler);
+                });
             }
         }
     }
 
     startFight() { //start the fight by switching the game state
         this.state = "PLAYER_TURN";
-        console.log(this.state)
+        // console.log(this.state)
         updateUI();
-        console.log("Start fight")
 
     }
 
-    updateMap() {  //update map work i n progress
-        if (this.player.currentTile < mapData.length) {
-            mapData[this.player.currentTile - 1].completed = true;
-            displayMap(this.player.currentTile);
-        } else {
-            this.gameOver();
-        }
+    updateMap() {  //update map, to change color and state of tile
+        mapData.forEach((tile, index) => {
+            const tileInstance = document.getElementById(`tile_${index}`);
+             if (this.player.currentTile < mapData.length) {
+                if (this.player.currentTile === index) {
+                    tile.completed = true
+                    tileInstance.style.animation = "glow 2s infinite";
+                } else if (this.player.currentTile > index) {
+
+                    tileInstance.style.animation = "none";
+                    tileInstance.style.background = "green";
+                }
+                } else {
+                    this.gameOver();
+                    tileInstance.style.animation = "glow 1s infinite";
+                    tileInstance.style.background = "green";
+                    tileInstance.style.color = "yellow"
+                }
+        });
+
+       
     }
 }
 

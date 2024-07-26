@@ -14,7 +14,7 @@ const player = new Player("Blue");
 
 let game = new Game(player, randomEnemies());
 
-const subsequentBattles = (player) => {
+export const subsequentBattles = (player) => {
   console.log("new game function called")
   game = new Game(player, randomEnemies())
   console.log(game.enemies)
@@ -28,6 +28,7 @@ export const updateUI = () => {
   displayDiscardHTML(game);
   displayScoreHTML(game);
   displayCard(game.player.hand);
+  game.updateMap();
   game.addEventListeners();
   game.enemies.forEach(enemy => {
     if(enemy.health <= 0){
@@ -43,6 +44,3 @@ export const updateUI = () => {
 }
 
 game.start()
-
-
-export default subsequentBattles;

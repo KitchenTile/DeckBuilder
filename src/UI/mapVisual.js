@@ -11,12 +11,6 @@ const displayMap = (currentTile) => {
         tileDiv.id = `tile_${index}`;
         tileDiv.innerHTML = `<h2>${tile.type}</h2>`
 
-        if (index === currentTile) {
-            tileDiv.classList.add("current-tile")
-        } else if (tile.completed) {
-            tileDiv.classList.add("completed-tile")
-        }
-
         mapDiv.appendChild(tileDiv);
     })
 }

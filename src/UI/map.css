@@ -1,26 +1,22 @@
 #map_container {
+    width: 50%;
     display: flex;
     justify-content: space-around;
-    margin-top: 20px;
-  }
+    align-items: center;
+    flex-direction: row;
+    position: relative;
+    top: -110px;
+}
   
-  .tile {
-    width: 100px;
-    height: 100px;
-    display: inline-block;
-    margin: 5px;
-    border: 2px solid black;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 100px; /* Center text vertically */
-    background-color: lightgray;
-    cursor: pointer;
-  }
-  
-  .current-tile {
-    border: 2px solid yellow;
-  }
-  
-  .completed-tile {
-    background-color: green;
-  }
+.tile {
+  width: 80px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 5px;
+  border: 2px solid black;
+  text-align: center;
+  background-color: lightgray;
+  cursor: pointer;
+}
