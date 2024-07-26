@@ -19,6 +19,7 @@ body {
   flex-direction: column; 
   align-items: center;
   justify-content: space-between;
+  overflow: hidden;
 }
 
 .top_bit {
@@ -46,12 +47,6 @@ body {
   justify-content: space-around;
 }
 
-/* .models {
-  display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-around;
-} */
 
 .enemies {
   width: 75%;
@@ -79,6 +74,7 @@ body {
 }
 
 
+
 #player_stats {
   width: 25%;
   display: flex;
@@ -90,6 +86,10 @@ body {
 
 #player_stats p{
   margin: 0px;
+}
+
+#logs {
+  height: 3%;
 }
 
 .bottomConsole {
@@ -150,3 +150,25 @@ body {
 #card_back {
   width: 12.5%;
 }
+
+#tiles_over_map {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-start;
+}
+
+
+/* @keyframes takeDamage {
+  from {background: none;}
+  to {background: red;}
+} */
+
+
+/*#map_container  { 
+  display: flex;
+  justify-content: space-around;
+  height: 100%;
+  align-items: center;
+    } */
