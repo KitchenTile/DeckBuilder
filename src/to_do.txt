@@ -1,3 +1,0 @@
-Next things to do:
-
-- after the fight is won the win message get's triggered every time the UI gets updated. 
