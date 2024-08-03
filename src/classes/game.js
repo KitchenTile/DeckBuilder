@@ -8,7 +8,7 @@ import mapData from "../data/mapData";
 import { updateUI, subsequentBattles } from "../main";
 import { initDeck } from "./cards";
 import { Bandit, Mage } from "./enemies";
-import { rewardItem } from "./items";
+import { populateItemList, rewardItem } from "./items";
 
 
 export default class Game {
@@ -58,17 +58,18 @@ export default class Game {
         // console.log(`${this.state}`)
         this.restartDeck();
         initDeck(this.player); //get a deck for player
-        rewardItem(this.player);
         this.enemies.forEach((enemy) => {
             enemy.decideNextMove(this.enemies, this.player); // for each enemy in battle decide next move
         });
         if (this.player.currentTile === 0) {
             displayMap(this.player.currentTile); // display map, needs some fixing
+            populateItemList();
         }
         this.addEventListeners();
         updateUI();
         if (this.player.currentTile > 0) { //I have to add this here because if I don't the state doesn't change after I select a new tile
             this.state = "PLAYER_TURN"
+            rewardItem(this.player);
         }
 
         this.playerTurn(); //This doesn't work like i'd like to

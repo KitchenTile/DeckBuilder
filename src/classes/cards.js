@@ -42,8 +42,8 @@ export class Card {
             case "charger":
                 logToPrint(`${this.title} used!`)
                 target.energy += this.effect;
-                if (target.health + this.effect > 100){
-                    target.health = 100;
+                if (target.health + this.effect > target.maxHealth){
+                    target.health = target.maxHealth;
                 } else {
                     target.health += this.effect;
                 }
