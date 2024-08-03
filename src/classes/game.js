@@ -8,6 +8,7 @@ import mapData from "../data/mapData";
 import { updateUI, subsequentBattles } from "../main";
 import { initDeck } from "./cards";
 import { Bandit, Mage } from "./enemies";
+import { rewardItem } from "./items";
 
 
 export default class Game {
@@ -57,6 +58,7 @@ export default class Game {
         // console.log(`${this.state}`)
         this.restartDeck();
         initDeck(this.player); //get a deck for player
+        rewardItem(this.player);
         this.enemies.forEach((enemy) => {
             enemy.decideNextMove(this.enemies, this.player); // for each enemy in battle decide next move
         });

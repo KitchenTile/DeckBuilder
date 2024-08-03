@@ -11,7 +11,7 @@ export default class Player {
         this.armor = 0;
         this.deck = [];
         this.cash = 0;
-        // this.items = [];
+        this.items = [];
         this.energy = 3;
         this.hand = [];
         this.handMax = 5;

@@ -1,3 +1,5 @@
+import itemData from "../data/itemData";
+
 export class item{
     constructor(name, effect, description, symbol) {
         this.name = name;
@@ -7,19 +9,19 @@ export class item{
     }
 
 
-    
-
 }
 
 export const createItem = (itemInfo) => { // function that creates items from data
     return new item(itemInfo.name, itemInfo.effect, itemInfo.description, itemInfo.symbol);
 }
 
-export const rewardItem = (itemData) => {
+export const rewardItem = (player) => {
     const itemList = [];
     itemData.forEach(item => {
         itemList.push(createItem(item));
     });
+    const randomItem = Math.floor(Math.random() * (itemList.length));
 
-    console.log(itemList);
+    player.items.push(itemList[randomItem])
+    console.log(player.items);
 }
