@@ -4,7 +4,7 @@ const displayPlayerStatsHTML = (game) => {
     playerStats.innerHTML = `
       <div>
         <h3>${game.player.name}'s stats</h3>
-        <p>Health: ${game.player.health}</p>
+        <p>Health: ${game.player.health}/${game.player.maxHealth}</p>
         <p>Armor: ${game.player.armor}</p>
         <p>Energy: ${game.player.energy}</p>
       </div>
