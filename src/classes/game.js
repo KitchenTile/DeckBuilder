@@ -97,8 +97,8 @@ export default class Game {
 
     playerTurn() { // fuction that gets called every time it's the players turn, it resets the hand, armor and energy
         // console.log("NEW PLAYER TURN")
-        this.player.armor = 0;
-        this.player.energy = 3;
+        this.player.armor = this.player.startingArmor;
+        this.player.energy = this.player.startingEnergy;
         this.player.getHand();
         updateUI();
     }

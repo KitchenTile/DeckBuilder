@@ -6,13 +6,16 @@ import logToPrint from "../UI/displayLogs";
 export default class Player {
     constructor(name) {
         this.name = name;
-        this.health = 100;
+        this.startingHealth = 100;
+        this.health = this.startingHealth;
         this.currentTile = 0;
-        this.armor = 0;
+        this.startingArmor = 10;
+        this.armor = this.startingArmor;
         this.deck = [];
         this.cash = 0;
         this.items = [];
-        this.energy = 3;
+        this.startingEnergy = 3;
+        this.energy = this.startingEnergy;
         this.hand = [];
         this.handMax = 5;
         this.discardPile = [];
