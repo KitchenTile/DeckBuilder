@@ -318,9 +318,9 @@ const randomEnemies = () => { //function that decides how many enemies will be o
     const enemyList = enemyListGen();
     const random = Math.floor(Math.random() * 3) + 1; //random number between 1 and 3 to avoid empty fights
     for (let i = 0; i < random; i++) {
-        const randomEnemy = Math.floor(Math.random() * enemyList.length);
-        inFightEnemies.push(enemyList[randomEnemy]); //Choose and push random enemy
-        enemyList.splice(randomEnemy, 1); //Delete that enemy from the array so it can't get chosen again
+        const randomEnemyIndex = Math.floor(Math.random() * enemyList.length);
+        inFightEnemies.push(enemyList[randomEnemyIndex]); //Choose and push random enemy
+        enemyList.splice(randomEnemyIndex, 1); //Delete that enemy from the array so it can't get chosen again
     }
     return inFightEnemies;
 };

@@ -1,6 +1,6 @@
 import itemData from "../data/itemData";
 
-const itemList = [];
+const itemList = []; //global item list
 
 export class item{
     constructor(name, effect, description, symbol) {
@@ -17,8 +17,7 @@ const createItem = (itemInfo) => { // function that creates items from data
     return new item(itemInfo.name, itemInfo.effect, itemInfo.description, itemInfo.symbol);
 }
 
-export const populateItemList = () => {
-
+export const populateItemList = () => { //Fill item list with items
     itemData.forEach(item => {
         itemList.push(createItem(item));
         console.log(item.name)
@@ -27,26 +26,36 @@ export const populateItemList = () => {
     return itemList
 }
 
-export const rewardItem = (player) => {
+export const rewardItem = (target) => { //gives player a random item from the list and activates it's effect
 
-    const randomItem = itemList[Math.floor(Math.random() * (itemList.length))];
+    const randomItemIndex = Math.floor(Math.random() * itemList.length);
+    const randomItem = itemList[randomItemIndex]
 
-    player.items.push(randomItem)
+    target.items.push(randomItem);
     console.log(itemList);
     
     if (randomItem) {
         switch (randomItem.name) {
-            case "ITEM 1":
-                player.maxHealth += randomItem.effect;
-                player.health += randomItem.effect;
-                break
-            case "ITEM 2":
-                player.startingEnergy += randomItem.effect;
+            case "First Aid Kit":
+                target.maxHealth += randomItem.effect;
+                target.health += randomItem.effect;
+                console.log("First Aid aquired")
+                break;
+            case "Light Bulb":
+                target.startingEnergy += randomItem.effect;
+                console.log("Light bulb aquired")
+                break;
+            case "Extra Plates":
+                target.startingArmor += randomItem.effect;
+                console.log("Extra plates aquired")
                 break;
         }
     }
     
-    itemList.splice(randomItem, 1);
+    itemList.splice(randomItemIndex, 1); //Remove item from list so it doesn't give it more than once
 
-    console.log(itemList);
+    itemList.forEach(item => {
+        console.log(item.name)
+    })
+    
 }
