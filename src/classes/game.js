@@ -43,6 +43,7 @@ export default class Game {
             this.removeAllEventListeners();
             this.updateMap(); // ---- REMOVE NEXT TIME WE ADD AN UPDATE UI BEFORE CLICKING ON A TILE ----
             // updateUI();
+            rewardItem(this.player);
 
             //{** END SCREEN CALL **}
             this.screenDisplay("endScreen");
@@ -69,7 +70,7 @@ export default class Game {
         updateUI();
         if (this.player.currentTile > 0) { //I have to add this here because if I don't the state doesn't change after I select a new tile
             this.state = "PLAYER_TURN"
-            rewardItem(this.player);
+            // rewardItem(this.player);
         }
 
         this.playerTurn(); //This doesn't work like i'd like to
@@ -133,12 +134,13 @@ export default class Game {
                 document.querySelector(".top_bit").setAttribute("style", "flex-direction:row; background:black"); // I use .setAttribute instead of .style because flex-drection doesn't work with .style
                 document.querySelector("#enemy").style.display = "none";
                 document.querySelector("#logs").setAttribute("style", "font-size:40px;width:100%");
+
+                /** Reward selection **/
                 break;
             case "restartScreen": // Change the div's styling to undo endScreen changes
                 document.querySelector(".top_bit").setAttribute("style", "flex-direction:column; background-image: url('../src/images/Background.jpeg'); flex-direction: column; background-repeat: no-repeat; background-size: 100%; align-items: center;");
                 document.querySelector("#enemy").style.display = "flex";
                 document.querySelector("#logs").setAttribute("style", "font-size:24px;");
-
         }
 
     }

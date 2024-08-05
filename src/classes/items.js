@@ -20,7 +20,7 @@ const createItem = (itemInfo) => { // function that creates items from data
 export const populateItemList = () => { //Fill item list with items
     itemData.forEach(item => {
         itemList.push(createItem(item));
-        console.log(item.name)
+        // console.log(item.name)
     });
 
     return itemList
