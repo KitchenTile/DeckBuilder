@@ -1,3 +1,4 @@
+import { rewardLogToPrint } from "../UI/displayLogs";
 import itemData from "../data/itemData";
 
 const itemList = []; //global item list
@@ -39,15 +40,15 @@ export const rewardItem = (target) => { //gives player a random item from the li
             case "First Aid Kit":
                 target.maxHealth += randomItem.effect;
                 target.health += randomItem.effect;
-                console.log("First Aid aquired")
+                rewardLogToPrint("First Aid aquired")
                 break;
             case "Light Bulb":
                 target.startingEnergy += randomItem.effect;
-                console.log("Light bulb aquired")
+                rewardLogToPrint("Light bulb aquired")
                 break;
             case "Extra Plates":
                 target.startingArmor += randomItem.effect;
-                console.log("Extra plates aquired")
+                rewardLogToPrint("Extra plates aquired")
                 break;
         }
     }

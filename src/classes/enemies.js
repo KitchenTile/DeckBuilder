@@ -1,4 +1,4 @@
-import logToPrint from "../UI/displayLogs";
+import {logToPrint} from "../UI/displayLogs";
 
 
 //Create enemy class with some properties that will be inhereted by the differnet types of enemies

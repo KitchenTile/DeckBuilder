@@ -1,7 +1,7 @@
 //Create a game class to manage turn based logic
 
 //{** IMPORTS **}
-import logToPrint from "../UI/displayLogs";
+import {logToPrint} from "../UI/displayLogs";
 import displayMap from "../UI/mapVisual";
 import enemyData from "../data/enemyData";
 import mapData from "../data/mapData";
@@ -133,14 +133,17 @@ export default class Game {
             case "endScreen": // Change the div's styling to display the logs in the middle of the screen in a larger font
                 document.querySelector(".top_bit").setAttribute("style", "flex-direction:row; background:black"); // I use .setAttribute instead of .style because flex-drection doesn't work with .style
                 document.querySelector("#enemy").style.display = "none";
-                document.querySelector("#logs").setAttribute("style", "font-size:40px;width:100%");
-
+                document.querySelector("#logs").setAttribute("style", "font-size:40px;width:100%;position:inherit;flex-direction:column;align-items:flex-start;");
                 /** Reward selection **/
+                
+                document.querySelector("#rewardLog").setAttribute("style", "display:inline;font-size:40px;width:100%;position:inherit;padding-top:20px")
                 break;
             case "restartScreen": // Change the div's styling to undo endScreen changes
                 document.querySelector(".top_bit").setAttribute("style", "flex-direction:column; background-image: url('../src/images/Background.jpeg'); flex-direction: column; background-repeat: no-repeat; background-size: 100%; align-items: center;");
                 document.querySelector("#enemy").style.display = "flex";
-                document.querySelector("#logs").setAttribute("style", "font-size:24px;");
+                document.querySelector("#logs").setAttribute("style", "font-size:24px;position:absolute");
+                document.querySelector("#rewardLog").setAttribute("style", "display:none")
+
         }
 
     }

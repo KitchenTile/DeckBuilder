@@ -1,5 +1,5 @@
 
-import logToPrint from "../UI/displayLogs";
+import {logToPrint} from "../UI/displayLogs";
 
 //Created a player class with a couple of properties I thought were appropriate,
 //Will probalby change a lot of this later on
