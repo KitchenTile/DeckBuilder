@@ -88,7 +88,7 @@ body {
   margin: 0px;
 }
 
-#logs {
+.logs {
   display: flex;
   align-items: center;
   height: 3%;
@@ -98,8 +98,13 @@ body {
 
 #rewardLog {
   display: none;
-  
+  font-size:40px;
+  width:100%;
+  position:inherit;
+  padding-top:20px
 }
+
+
 
 .bottomConsole {
   display: flex;
