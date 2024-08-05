@@ -29,7 +29,7 @@ export const populateItemList = () => { //Fill item list with items
 export const rewardItem = (target) => { //gives player a random item from the list and activates it's effect
 
     const randomItemIndex = Math.floor(Math.random() * itemList.length);
-    const randomItem = itemList[randomItemIndex]
+    const randomItem = itemList[randomItemIndex];
 
     target.items.push(randomItem);
     console.log(itemList);
