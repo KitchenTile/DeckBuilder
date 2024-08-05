@@ -90,6 +90,8 @@ body {
 
 #logs {
   height: 3%;
+  position: absolute;
+  top: 63%;
 }
 
 .bottomConsole {
