@@ -89,9 +89,16 @@ body {
 }
 
 #logs {
+  display: flex;
+  align-items: center;
   height: 3%;
   position: absolute;
   top: 63%;
+}
+
+#rewardLog {
+  display: none;
+  
 }
 
 .bottomConsole {
