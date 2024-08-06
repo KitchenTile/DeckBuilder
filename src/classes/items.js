@@ -50,6 +50,10 @@ export const rewardItem = (target) => { //gives player a random item from the li
                 target.startingArmor += randomItem.effect;
                 rewardLogToPrint("Extra plates aquired")
                 break;
+            case "Ace Under The Sleeve":
+                target.handMax += randomItem.effect;
+                break;
+
         }
     }
     

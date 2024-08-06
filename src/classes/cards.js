@@ -48,6 +48,26 @@ export class Card {
                     target.health += this.effect;
                 }
                 break;
+            case "draw":
+                logToPrint(`${this.title} used!`)
+                const randomIndex = Math.floor(Math.random() * target.deck.length);
+                const randomCard = target.deck[randomIndex]
+                if (this.title === "Fill Up") {
+                    while(target.hand.length < target.handMax + 1) {
+                        target.hand.push(randomCard)
+                        target.deck.splice(randomIndex, 1)
+                    }
+                } else {
+                    if (target.hand.length < target.handMax) {
+                        target.hand.push(randomCard);
+                        target.deck.splice(randomIndex, 1);
+                    } else {
+                        logToPrint("Hand is full!")
+                        return false; 
+                    }
+
+                }
+                break;
         }
         return true;
     }

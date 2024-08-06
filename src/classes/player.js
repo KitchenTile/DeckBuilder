@@ -75,7 +75,7 @@ export default class Player {
                 const random = Math.floor(Math.random() * this.deck.length);
                 const randomCard = this.deck[random];
                 this.hand.push(randomCard);
-                this.deck.splice(this.deck.indexOf(randomCard), 1);
+                this.deck.splice(random, 1);
             } else { // if the deck is empty, dump the cards from the discard pile into the deck - I could use a different method for this maybe
                 console.log("Shuffling...")
                 this.discardPile.forEach(card => {
