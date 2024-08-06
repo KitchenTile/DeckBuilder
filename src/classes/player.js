@@ -77,16 +77,20 @@ export default class Player {
                 this.hand.push(randomCard);
                 this.deck.splice(random, 1);
             } else { // if the deck is empty, dump the cards from the discard pile into the deck - I could use a different method for this maybe
-                console.log("Shuffling...")
-                this.discardPile.forEach(card => {
-                    this.deck.push(card);
-                })
-                // this.displayDeck();
-                this.discardPile = [];
+                this.shuffleDeck();
             }
         }
         // this.displayDeck();
         // this.displayHand();
+    }
+
+    shuffleDeck() {
+        console.log("Shuffling...")
+        this.discardPile.forEach(card => {
+            this.deck.push(card);
+        })
+        // this.displayDeck();
+        this.discardPile = [];
     }
 
     discardHand() {

@@ -50,15 +50,27 @@ export class Card {
                 break;
             case "draw":
                 logToPrint(`${this.title} used!`)
-                const randomIndex = Math.floor(Math.random() * target.deck.length);
-                const randomCard = target.deck[randomIndex]
+
                 if (this.title === "Fill Up") {
                     while(target.hand.length < target.handMax + 1) {
-                        target.hand.push(randomCard)
-                        target.deck.splice(randomIndex, 1)
+                        const randomIndex = Math.floor(Math.random() * target.deck.length);
+                        const randomCard = target.deck[randomIndex];
+                        target.hand.push(randomCard);
+                        target.deck.splice(randomIndex, 1);
+                        if (target.deck.length <= target.handMax - target.hand.length) {
+                            console.log("supposed to be shiffling")
+                            target.shuffleDeck()
+                        }
                     }
                 } else {
                     if (target.hand.length < target.handMax) {
+                        if (target.deck.length < this.effect) {
+                            console.log("supposed to be shiffling")
+
+                            target.shuffleDeck()
+                        }
+                        const randomIndex = Math.floor(Math.random() * target.deck.length);
+                        const randomCard = target.deck[randomIndex];
                         target.hand.push(randomCard);
                         target.deck.splice(randomIndex, 1);
                     } else {
