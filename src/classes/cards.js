@@ -53,26 +53,27 @@ export class Card {
 
                 if (this.title === "Fill Up") {
                     while(target.hand.length < target.handMax + 1) {
+                        if (target.deck.length <= target.handMax - target.hand.length) {
+                            target.shuffleDeck()
+                        }
                         const randomIndex = Math.floor(Math.random() * target.deck.length);
                         const randomCard = target.deck[randomIndex];
                         target.hand.push(randomCard);
                         target.deck.splice(randomIndex, 1);
-                        if (target.deck.length <= target.handMax - target.hand.length) {
-                            console.log("supposed to be shiffling")
-                            target.shuffleDeck()
-                        }
+
                     }
                 } else {
                     if (target.hand.length < target.handMax) {
                         if (target.deck.length < this.effect) {
-                            console.log("supposed to be shiffling")
-
                             target.shuffleDeck()
                         }
-                        const randomIndex = Math.floor(Math.random() * target.deck.length);
-                        const randomCard = target.deck[randomIndex];
-                        target.hand.push(randomCard);
-                        target.deck.splice(randomIndex, 1);
+                        for (let i = 0; i < this.effect; i++) {
+                            const randomIndex = Math.floor(Math.random() * target.deck.length);
+                            const randomCard = target.deck[randomIndex];
+                            target.hand.push(randomCard);
+                            target.deck.splice(randomIndex, 1);
+                        }
+
                     } else {
                         logToPrint("Hand is full!")
                         return false; 
