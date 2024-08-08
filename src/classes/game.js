@@ -3,6 +3,7 @@
 //{** IMPORTS **}
 import {logToPrint} from "../UI/displayLogs";
 import displayMap from "../UI/mapVisual";
+import screenDisplay from "../UI/screenDisplay";
 import enemyData from "../data/enemyData";
 import mapData from "../data/mapData";
 import { updateUI, subsequentBattles } from "../main";
@@ -46,7 +47,7 @@ export default class Game {
             rewardItem(this.player);
 
             //{** END SCREEN CALL **}
-            this.screenDisplay("endScreen");
+            screenDisplay("endScreen");
 
 
             // {** MAP TILES EVENT LISTENER **}  //adding an event listener after the battle is over allows us to click the next fight
@@ -124,26 +125,8 @@ export default class Game {
     }
 
     gameOver() { //game over function currently only displays message 
-        this.screenDisplay("endScreen");
+        screenDisplay("endScreen");
         logToPrint(`GAME OVER - ${this.player.name} cashed out at ${this.player.cash} money`);
-    }
-
-    screenDisplay(state) { 
-        switch (state) {
-            case "endScreen": // Change the div's styling to display the logs in the middle of the screen in a larger font
-                document.querySelector(".top_bit").setAttribute("style", "flex-direction:row; background:black"); // I use .setAttribute instead of .style because flex-drection doesn't work with .style
-                document.querySelector("#enemy").style.display = "none";
-                document.querySelector(".logs").setAttribute("style", "font-size:40px;width:100%;position:inherit;flex-direction:column;align-items:flex-start;");                
-                document.querySelector("#rewardLog").setAttribute("style", "display:inline;")
-                break;
-            case "restartScreen": // Change the div's styling to undo endScreen changes
-                document.querySelector(".top_bit").setAttribute("style", "flex-direction:column; background-image: url('../src/images/Background.jpeg'); flex-direction: column; background-repeat: no-repeat; background-size: 100%; align-items: center;");
-                document.querySelector("#enemy").style.display = "flex";
-                document.querySelector(".logs").setAttribute("style", "font-size:24px;position:absolute");
-                document.querySelector("#rewardLog").setAttribute("style", "display:none")
-
-        }
-
     }
  
 
@@ -257,7 +240,7 @@ export default class Game {
 
             if (index > 0) { // everytime we click an other tile then
                 subsequentBattles(this.player) //start a new game instance
-                this.screenDisplay("restartScreen") //switch the screen display 
+                screenDisplay("restartScreen") //switch the screen display 
                 this.startFight(); //start the battle
                 this.eventHandlers.tile.forEach(({ element, handler }) => { // For some reason I need to remove left over event handlers
                     element.removeEventListener("click", handler);
