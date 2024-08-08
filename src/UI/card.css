@@ -28,6 +28,10 @@
     font-size: 9px;
 }
 
+.card_container.draw {
+    background-color: rgb(73, 25, 117);
+}
+
 .name_symbol{
     display: flex;
     justify-content: space-between;

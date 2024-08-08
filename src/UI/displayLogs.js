@@ -5,7 +5,7 @@ const logToPrint = (log) => {
 }
 
 const rewardLogToPrint = (log) => {
-    const rewardLogDiv = document.getElementById("rewardLog");
+    const rewardLogDiv = document.getElementById("itemRewardLog");
     rewardLogDiv.innerHTML = `${log}`
 }
 

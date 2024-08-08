@@ -22,9 +22,9 @@ const cardData = [
     {title: "Fried Crickets", type: "charger", effect: 1, legend: "A fair dose of protein.", symbol: "⛾", energyCost: 0, img: HappyBlue},
     {title: "Fried Crickets", type: "charger", effect: 1, legend: "A fair dose of protein.", symbol: "⛾", energyCost: 0, img: HappyBlue},
 
-    {title: "Draw 2", type: "draw", effect: 2, legend: "Draw 2 cards.", symbol: "⛾", energyCost: 1, img: HappyBlue},
-    {title: "Draw 2", type: "draw", effect: 2, legend: "Draw 2 cards.", symbol: "⛾", energyCost: 1, img: HappyBlue},
-    {title: "Fill Up", type: "draw", effect: 7, legend: "Draw cards until your hand is full.", symbol: "⛾", energyCost: 2, img: HappyBlue},
+    {title: "Draw 2", type: "draw", effect: 2, legend: "Draw 2 cards.", symbol: "🂡", energyCost: 1, img: HappyBlue},
+    {title: "Draw 2", type: "draw", effect: 2, legend: "Draw 2 cards.", symbol: "🂡", energyCost: 1, img: HappyBlue},
+    {title: "Fill Up", type: "draw", effect: 7, legend: "Draw cards until your hand is full.", symbol: "🂡", energyCost: 2, img: HappyBlue},
 
 ];
 
