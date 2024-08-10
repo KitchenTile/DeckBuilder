@@ -1,4 +1,3 @@
-// import cardData from "./data/cardData";
 import "./card.css";
 
 

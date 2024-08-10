@@ -7,7 +7,7 @@ import screenDisplay from "../UI/screenDisplay";
 import enemyData from "../data/enemyData";
 import mapData from "../data/mapData";
 import { updateUI, subsequentBattles } from "../main";
-import { initDeck } from "./cards";
+import { initDeck, rewardCard } from "./cards";
 import { Bandit, Mage } from "./enemies";
 import { populateItemList, rewardItem } from "./items";
 
@@ -45,6 +45,7 @@ export default class Game {
             this.updateMap(); // ---- REMOVE NEXT TIME WE ADD AN UPDATE UI BEFORE CLICKING ON A TILE ----
             // updateUI();
             rewardItem(this.player);
+            rewardCard(this.player);
 
             //{** END SCREEN CALL **}
             screenDisplay("endScreen");
@@ -60,12 +61,16 @@ export default class Game {
         // console.log(`${this.state}`)
         this.restartDeck();
         initDeck(this.player); //get a deck for player
+        this.player.deck.forEach(card => {
+            console.log(card.title)
+        })
         this.enemies.forEach((enemy) => {
             enemy.decideNextMove(this.enemies, this.player); // for each enemy in battle decide next move
         });
         if (this.player.currentTile === 0) {
             displayMap(this.player.currentTile); // display map, needs some fixing
             populateItemList();
+            // populateRewardCardList();
         }
         this.addEventListeners();
         updateUI();

@@ -6,7 +6,7 @@ import HappyBlue from "../images/HappyBlue.png"
 
 //Array of cards to add to the deck
 
-const cardData = [
+const initialDeckData = [
     {title: "Slash", type: "attack", effect: 10, legend: "A deadly slash.", symbol: "⚔", energyCost: 2, img: BaldElon},
     {title: "Slash", type: "attack", effect: 10, legend: "A deadly slash.", symbol: "⚔", energyCost: 2, img: BaldElon},
     {title: "Slash", type: "attack", effect: 10, legend: "A deadly slash.", symbol: "⚔", energyCost: 2, img: BaldElon},
@@ -28,4 +28,13 @@ const cardData = [
 
 ];
 
-export default cardData;
+//Array of cards to add to deck after winning a battle
+
+const rewardCardData = [
+    {title: "Extra Card 1", type: "attack", effect: 10, legend: "A deadly slash.", symbol: "⚔", energyCost: 2, img: BaldElon},
+    {title: "Extra Card 2", type: "defense", effect: 5, legend: "Prevents slashes.", symbol: "⛨", energyCost: 1, img: ComptentBlue},
+    {title: "Extra Card 3", type: "charger", effect: 1, legend: "A fair dose of protein.", symbol: "⛾", energyCost: 0, img: HappyBlue},
+    {title: "Extra Card 4", type: "draw", effect: 2, legend: "Draw 2 cards.", symbol: "🂡", energyCost: 1, img: HappyBlue},
+]
+
+export {initialDeckData, rewardCardData};

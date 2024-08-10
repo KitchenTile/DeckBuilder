@@ -1,5 +1,5 @@
-import cardData from "../data/cardData";
-import {logToPrint} from "../UI/displayLogs";
+import { initialDeckData, rewardCardData } from "../data/cardData";
+import {cardRewardLogToPrint, logToPrint} from "../UI/displayLogs";
 
 // Create a Card class with a couple of properties I felt were appropriate.
 
@@ -86,16 +86,29 @@ export class Card {
     }
 }
 
+let rewardCardList = []; //Empty list for reward cards
+
 
 //Create cards based on the above array
-export const createCard = (cardInfo) => {
+const createCard = (cardInfo) => {
     return new Card(cardInfo.title, cardInfo.type, cardInfo.effect, cardInfo.legend, cardInfo.energyCost, cardInfo.symbol, cardInfo.img);
+}
+
+
+export const rewardCard = () => {
+    const randomRewardCardIndex = Math.floor(Math.random() * rewardCardData.length);
+    const randomCard = rewardCardData[randomRewardCardIndex]
+    console.log(randomCard)
+    cardRewardLogToPrint(`${randomCard.title} aquired`)
+
+    initialDeckData.push(randomCard);
+    rewardCardData.splice(randomRewardCardIndex, 1);
 }
 
 
 //Add cards to deck and display deck, might change later
 export const initDeck = player => {
-    cardData.forEach(card => {
+    initialDeckData.forEach(card => {
         let newCard = createCard(card);
         player.addToDeck(newCard);
     })

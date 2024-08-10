@@ -1,7 +1,7 @@
-import { rewardLogToPrint } from "../UI/displayLogs";
+import { itemRewardLogToPrint } from "../UI/displayLogs";
 import itemData from "../data/itemData";
 
-const itemList = []; //global item list
+let itemList = []; //global item list
 
 export class item{
     constructor(name, effect, description, symbol) {
@@ -19,12 +19,11 @@ const createItem = (itemInfo) => { // function that creates items from data
 }
 
 export const populateItemList = () => { //Fill item list with items
-    itemData.forEach(item => {
-        itemList.push(createItem(item));
+    itemList = itemData.map(item => {
+        let newItem = createItem(item);
         // console.log(item.name)
+        return newItem
     });
-
-    return itemList
 }
 
 export const rewardItem = (target) => { //gives player a random item from the list and activates it's effect
@@ -40,15 +39,12 @@ export const rewardItem = (target) => { //gives player a random item from the li
             case "First Aid Kit":
                 target.maxHealth += randomItem.effect;
                 target.health += randomItem.effect;
-                rewardLogToPrint("First Aid aquired")
                 break;
             case "Light Bulb":
                 target.startingEnergy += randomItem.effect;
-                rewardLogToPrint("Light bulb aquired")
                 break;
             case "Extra Plates":
                 target.startingArmor += randomItem.effect;
-                rewardLogToPrint("Extra plates aquired")
                 break;
             case "Ace Under The Sleeve":
                 target.handMax += randomItem.effect;
@@ -56,6 +52,7 @@ export const rewardItem = (target) => { //gives player a random item from the li
 
         }
     }
+    itemRewardLogToPrint(`${randomItem.name} aquired`);
     
     itemList.splice(randomItemIndex, 1); //Remove item from list so it doesn't give it more than once
 
