@@ -100,7 +100,6 @@ body {
   display: none;
   font-size:40px;
   width:100%;
-  position:inherit;
   padding-top:20px
 }
 
@@ -108,8 +107,19 @@ body {
   display: none;
   font-size:40px;
   width:100%;
-  position:inherit;
   padding-top:20px
+}
+
+#card_Reward_Visual {
+  margin-top: 20px;
+  color: black;
+  display: none;
+  justify-content: space-around;
+  align-items: center;
+  /* background-color: rgb(19, 31, 65); */
+  /* background-color: #5C4033; */
+  width: 100%;
+  /* border-style: solid; */
 }
 
 
