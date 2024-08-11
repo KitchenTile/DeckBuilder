@@ -1,5 +1,7 @@
 import { initialDeckData, rewardCardData } from "../data/cardData";
+import {displayRewardCard} from "../UI/cardVisual";
 import {cardRewardLogToPrint, logToPrint} from "../UI/displayLogs";
+
 
 // Create a Card class with a couple of properties I felt were appropriate.
 
@@ -94,15 +96,45 @@ const createCard = (cardInfo) => {
     return new Card(cardInfo.title, cardInfo.type, cardInfo.effect, cardInfo.legend, cardInfo.energyCost, cardInfo.symbol, cardInfo.img);
 }
 
+const populateRewardCardList = () => {
+    rewardCardList = rewardCardData.map(card => {
+        return createCard(card);
+    })
+}
+
 
 export const rewardCard = () => {
-    const randomRewardCardIndex = Math.floor(Math.random() * rewardCardData.length);
-    const randomCard = rewardCardData[randomRewardCardIndex]
-    console.log(randomCard)
-    cardRewardLogToPrint(`${randomCard.title} aquired`)
+    cardRewardLogToPrint("");
 
-    initialDeckData.push(randomCard);
-    rewardCardData.splice(randomRewardCardIndex, 1);
+    populateRewardCardList();
+    displayRewardCard(rewardCardList);
+
+
+    // get event listeners for each card -- reused part of the code for the game.js event listeners but simplified
+    rewardCardList.forEach((_, index) => {
+        const cardInstance = document.getElementById(`reward_card_${index}`) 
+
+        const cardHandler = () => { //when we click a card then that card gets added to the deck to be generated next turn
+            initialDeckData.push(rewardCardData[index]);
+            console.log(rewardCardData[index])
+            rewardCardData.splice(index, 1);
+
+            document.querySelector("#card_Reward_Visual").setAttribute("style", "display:none;")
+            cardRewardLogToPrint(`${rewardCardData[index].title} aquired`)
+
+
+        }
+        cardInstance.addEventListener("click", cardHandler);
+    })
+
+    // const randomRewardCardIndex = Math.floor(Math.random() * rewardCardData.length);
+    // const randomCard = rewardCardData[randomRewardCardIndex]
+    // rewardCardList.push(createCard(randomCard))
+    // console.log(randomCard)
+    // cardRewardLogToPrint(`${randomCard.title} aquired`)
+
+    // initialDeckData.push(randomCard);
+    // rewardCardData.splice(randomRewardCardIndex, 1);
 }
 
 
