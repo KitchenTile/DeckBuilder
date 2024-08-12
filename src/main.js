@@ -5,7 +5,7 @@ import Player from "./classes/player";
 import displayEnemyStatsHTML from "./UI/enemyStats";
 import displayPlayerStatsHTML from "./UI/playerStats";
 import {displayDiscardHTML, displayDeckHTML, displayScoreHTML} from "./UI/displayInfo"
-import displayCard from "./UI/cardVisual";
+import { displayCard } from "./UI/cardVisual";
 import enemyData from "./data/enemyData";
 
 const player = new Player("Blue");
