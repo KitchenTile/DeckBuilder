@@ -106,23 +106,29 @@ export class Mage extends Enemy {
 
     //Heal 15HP
     heal(target) {
-        if (target.health + this.healAbility >= this.spawnHealth) {
-            target.health = this.spawnHealth;
-            logToPrint(`${this.name} healed ${target.name} back to full health`)
-            console.log(`${this.name} healed ${target.name} back to full health`)
+        if (target.isAlive) { // targets get decided before the moves are played, so if we don't add this conditional dead enemies can potentially be healed.
+            if (target.health + this.healAbility >= this.spawnHealth) {
+                // console.log("heal")
+                target.health = this.spawnHealth;
+                logToPrint(`${this.name} healed ${target.name} back to full health`)
+                console.log(`${this.name} healed ${target.name} back to full health`)
 
-        }  else {
-            target.health += this.healAbility;
-            logToPrint(`${this.name} healed ${target.name} for ${this.healAbility} HP`)
-            console.log(`${this.name} healed ${target.name} for ${this.healAbility} HP`)
+            }  else {
+                target.health += this.healAbility;
+                logToPrint(`${this.name} healed ${target.name} for ${this.healAbility} HP`)
+                console.log(`${this.name} healed ${target.name} for ${this.healAbility} HP`)
 
+            }
+        } else {
+            logToPrint(`${target.name} was meant to be healed but got slained right before`)
+            console.log(`${target.name} was meant to be healed but got slained right before`)
         }
     }
 
 
     randomAlly(allies) { // grab the game.enemies list and pick a random one based on its length
         const random = Math.floor(Math.random() * allies.length)
-        if (allies[random].isAlive && typeof allies[random] !== "undefined"){ // if the ally is alive
+        if (allies[random].isAlive){ // if the ally is alive
             return allies[random]; //return ally
         } else {
             console.log("Can't use that on a dead ally")
