@@ -104,7 +104,7 @@ const populateRewardCardList = () => {
 
 
 export const rewardCard = () => {
-    cardRewardLogToPrint("");
+    cardRewardLogToPrint(""); // if I dont change this to an empty string it doens't update in the handler function
 
     populateRewardCardList();
     displayRewardCard(rewardCardList);
@@ -117,11 +117,11 @@ export const rewardCard = () => {
         const cardHandler = () => { //when we click a card then that card gets added to the deck to be generated next turn
             initialDeckData.push(rewardCardData[index]);
             console.log(rewardCardData[index])
-            rewardCardData.splice(index, 1);
+            console.log(rewardCardData[index].title)
 
             document.querySelector("#card_Reward_Visual").setAttribute("style", "display:none;")
             cardRewardLogToPrint(`${rewardCardData[index].title} aquired`)
-
+            rewardCardData.splice(index, 1);
 
         }
         cardInstance.addEventListener("click", cardHandler);
