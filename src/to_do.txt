@@ -1,1 +1,0 @@
-Update the game over sreen so there's no cards/items to earn/display.
