@@ -1,3 +1,5 @@
+// I'm commenting this and only this file as a psychopath in case I have to do it for every file on submittion. Hoepfully I'll be able to strip 70% of the comments here.
+
 //Create a game class to manage turn based logic
 
 //{** IMPORTS **}
