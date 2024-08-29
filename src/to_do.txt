@@ -1,0 +1,8 @@
+-- refactor code into DRY and signle responsibility including CSS.
+-- health bars?
+-- refactor map code
+-- redesign map visuals
+-- make more cards
+-- create upgraded versions of cards
+-- think of upgrade cards code
+-- booses
