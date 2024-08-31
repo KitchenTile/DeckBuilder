@@ -13,13 +13,14 @@ body {
 
 .gameDiv {
   width: 1700px;
-  height: 1200px;
+  height: 1150px;
   background-color: #335c40;
   display: flex;
   flex-direction: column; 
   align-items: center;
   justify-content: space-between;
-  overflow: hidden;
+  /* overflow: hidden; */
+  /* margin-top: 200px; Only use on laptop */
 }
 
 .top_bit {
