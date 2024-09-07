@@ -10,6 +10,7 @@ const displayEnemyStatsHTML = (game) => {
           <h3>${enemy.name}'s Stats</h3>
           <p>type: ${enemy.type}</p>
           <p>Health: ${enemy.health}</p>
+          <div class="health_Bar"></div>
           <p>Damage: ${enemy.damage}</p>
           <p>Next move: ${enemy.nextMove.move}<p>
         </div>
