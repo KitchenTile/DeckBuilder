@@ -75,11 +75,25 @@ body {
 
 #stats .health_Bar{
   width: 200px;
-  background-color: red;
   height: 28px;
   border-radius: 10px;
+  border: black 1px solid;
 }
 
+
+#stats .health_Bar_container{
+  height: 30px;
+  width: 202px;
+}
+
+.green{
+  background-color: green;
+  position: relative;
+  top: -30px;
+}
+.red{
+  background-color: red;
+}
 
 #player_stats {
   width: 25%;
