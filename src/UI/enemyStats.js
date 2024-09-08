@@ -15,9 +15,9 @@ const displayEnemyStatsHTML = (game) => {
         <p>type: ${enemy.type}</p>
         <p>Health: ${enemy.health}</p>
         <div class="health_Bar_Container">
-          <p>${enemy.health} / ${enemy.spawnHealth} </p>
+          <p class="health_Info">${enemy.health} / ${enemy.spawnHealth} </p>
           <div class="health_Bar red"></div>
-          <div class="health_Bar green"></div>
+          <div class="health_Bar green" id="enemy_${index}_healthbar"></div>
         </div>
         <p>Damage: ${enemy.damage}</p>
         <p>Next move: ${enemy.nextMove.move}<p>
@@ -27,7 +27,7 @@ const displayEnemyStatsHTML = (game) => {
 
   `
 
-  document.querySelector(".health_Bar.green").style.width = enemy.health * 100 / enemy.spawnHealth + "%";
+  document.getElementById(`enemy_${index}_healthbar`).style.width = enemy.health * 100 / enemy.spawnHealth + "%";
 
   });
   }
