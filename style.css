@@ -80,8 +80,15 @@ body {
   border: black 1px solid;
 }
 
+.health_Info {
+  width: inherit;
+  position: absolute;
+  z-index: 2;
+  text-align: center;
+}
 
-#stats .health_Bar_container{
+
+#stats .health_Bar_Container{
   height: 30px;
   width: 202px;
 }
@@ -93,6 +100,8 @@ body {
 }
 .red{
   background-color: red;
+  position: relative;
+  top: 0;
 }
 
 #player_stats {
