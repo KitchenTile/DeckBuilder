@@ -33,7 +33,7 @@ const initialDeckData = [
 const rewardCardData = [
     {title: "Knock Knock", type: "attack", effect: 20, legend: "Deal 10 damage twice.", symbol: "⚔", energyCost: 2, img: BaldElon},
     {title: "Golden Plate", type: "defense", effect: 10, legend: "Very sturdy.", symbol: "⛨", energyCost: 1, img: ComptentBlue},
-    {title: "Protein bar", type: "charger", effect: 3, legend: "A fair dose of protein.", symbol: "⛾", energyCost: 1, img: HappyBlue},
+    {title: "Protein bar", type: "charger", effect: 5, legend: "A fair dose of protein.", symbol: "⛾", energyCost: 1, img: HappyBlue},
     // {title: "Extra Card 4", type: "draw", effect: 2, legend: "Draw 2 cards.", symbol: "🂡", energyCost: 1, img: HappyBlue},
 ]
 
