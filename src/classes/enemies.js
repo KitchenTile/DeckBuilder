@@ -5,7 +5,7 @@ import {logToPrint} from "../UI/displayLogs";
 export class Enemy {
     constructor(name) {
         this.name = name;
-        this.spawnHealth = 0 + Math.floor(Math.random() * 10); // starting health at 30-40 HP
+        this.spawnHealth = 20 + Math.floor(Math.random() * 10); // starting health at 30-40 HP
         this.health = this.spawnHealth; // this will keep track of the enemies health throughout the fight
         this.isAlive = true;
         this.nextMove = null;
@@ -107,9 +107,9 @@ export class Mage extends Enemy {
     //Heal 15HP
     heal(target) {
         if (target.isAlive) { // targets get decided before the moves are played, so if we don't add this conditional dead enemies can potentially be healed.
-            if (target.health + this.healAbility >= this.spawnHealth) {
+            if (target.health + this.healAbility >= target.spawnHealth) {
                 // console.log("heal")
-                target.health = this.spawnHealth;
+                target.health = target.spawnHealth;
                 logToPrint(`${this.name} healed ${target.name} back to full health`)
                 console.log(`${this.name} healed ${target.name} back to full health`)
 
