@@ -1,5 +1,6 @@
-import { initialDeckData, rewardCardData } from "../data/cardData";
-import {displayRewardCard} from "../UI/cardVisual";
+import { cardTypeList, initialDeckData, rewardCardData } from "../data/cardData";
+import {displayRewardCard} from "../UI/cardRewardDisplay";
+import upgradeCardDisplay from "../UI/cardUpgradeDisplay";
 import {cardRewardLogToPrint, logToPrint} from "../UI/displayLogs";
 
 
@@ -126,15 +127,43 @@ export const rewardCard = () => {
         }
         cardInstance.addEventListener("click", cardHandler);
     })
+}
 
-    // const randomRewardCardIndex = Math.floor(Math.random() * rewardCardData.length);
-    // const randomCard = rewardCardData[randomRewardCardIndex]
-    // rewardCardList.push(createCard(randomCard))
-    // console.log(randomCard)
-    // cardRewardLogToPrint(`${randomCard.title} aquired`)
+// function to upgrade cards by changing the initialDeckData array
+export const upgradeCard = () => {
 
-    // initialDeckData.push(randomCard);
-    // rewardCardData.splice(randomRewardCardIndex, 1);
+    let unupgraededCardTypeList = [] //creates a new array to store the types that have not been upgraded
+
+
+    cardTypeList.forEach(card => {
+        if(card.upgraded === false) { //if the card type is not upgraded 
+            console.log(card.type)
+            unupgraededCardTypeList.push(card); //push it into the list
+        }
+    })
+    upgradeCardDisplay(unupgraededCardTypeList); //create buttons for the unupgraded card types
+
+    unupgraededCardTypeList.forEach((card, index) => { 
+        const buttonInstance = document.getElementById(`type_button_${index}`); 
+
+        const upgradeHandler = () => { //event listener function to upgrade the cards title and effect of the type selected
+            initialDeckData.forEach(deckCard => {
+                if(deckCard.type === card.type) { //if the card type is the same as the type selected
+                    deckCard.title += "+"; //add a + in the title
+                    deckCard.effect += 2; //Add 2 to the effect
+                }
+            })
+            card.upgraded = true; //set the upgraded property of card in cardTypeList to true so next time it doesn't appear as an option to upgrade.
+
+            console.log(initialDeckData);
+            console.log(unupgraededCardTypeList);
+
+        }
+
+
+        buttonInstance.addEventListener("click", upgradeHandler);
+    })
+
 }
 
 
