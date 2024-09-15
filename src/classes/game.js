@@ -3,13 +3,15 @@
 //Create a game class to manage turn based logic
 
 //{** IMPORTS **}
+import cardUpgradeDisplay from "../UI/cardUpgradeDisplay";
 import {logToPrint} from "../UI/displayLogs";
 import displayMap from "../UI/mapVisual";
 import screenDisplay from "../UI/screenDisplay";
+import { cardTypeList } from "../data/cardData";
 import enemyData from "../data/enemyData";
 import mapData from "../data/mapData";
 import { updateUI, subsequentBattles } from "../main";
-import { initDeck, rewardCard } from "./cards";
+import { initDeck, rewardCard, upgradeCard } from "./cards";
 import { Bandit, Mage } from "./enemies";
 import { populateItemList, rewardItem } from "./items";
 
@@ -47,7 +49,8 @@ export default class Game {
             this.updateMap(); // ---- REMOVE NEXT TIME WE ADD AN UPDATE UI BEFORE CLICKING ON A TILE ----
             // updateUI();
             rewardItem(this.player);
-            rewardCard(this.player);
+            rewardCard();
+            upgradeCard();
 
             //{** END SCREEN CALL **}
             screenDisplay("endScreen");
