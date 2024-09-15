@@ -37,4 +37,11 @@ const rewardCardData = [
     // {title: "Extra Card 4", type: "draw", effect: 2, legend: "Draw 2 cards.", symbol: "🂡", energyCost: 1, img: HappyBlue},
 ]
 
-export {initialDeckData, rewardCardData};
+const cardTypeList = [
+    {type: "attack", upgraded: true},    
+    {type: "defense", upgraded: false},  
+    {type: "charger", upgraded: false},  
+    {type: "draw", upgraded: false},  
+]
+
+export {initialDeckData, rewardCardData, cardTypeList};
