@@ -3,5 +3,4 @@
 -- redesign map visuals
 -- make more cards
 -- create upgraded versions of cards
--- think of upgrade cards code
 -- booses
