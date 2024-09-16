@@ -14,5 +14,9 @@ const cardRewardLogToPrint = (log) => {
     rewardLogDiv.innerHTML = `${log}`
 }
 
+const cardUpgradeLogToPrint = (log) => {
+    const upgradeLogDiv = document.getElementById("cardUpgradeLog");
+    upgradeLogDiv.innerHTML = `${log}`
+}
 
-export {logToPrint, itemRewardLogToPrint, cardRewardLogToPrint};
+export {logToPrint, itemRewardLogToPrint, cardRewardLogToPrint, cardUpgradeLogToPrint};
