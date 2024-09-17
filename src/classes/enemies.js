@@ -5,7 +5,7 @@ import {logToPrint} from "../UI/displayLogs";
 export class Enemy {
     constructor(name) {
         this.name = name;
-        this.spawnHealth = 20 + Math.floor(Math.random() * 10); // starting health at 30-40 HP
+        this.spawnHealth = 1 + Math.floor(Math.random() * 10); // starting health at 30-40 HP
         this.health = this.spawnHealth; // this will keep track of the enemies health throughout the fight
         this.isAlive = true;
         this.nextMove = null;

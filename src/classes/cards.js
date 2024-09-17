@@ -1,7 +1,7 @@
 import { cardTypeList, initialDeckData, rewardCardData } from "../data/cardData";
 import {displayRewardCard} from "../UI/cardRewardDisplay";
 import upgradeCardDisplay from "../UI/cardUpgradeDisplay";
-import {cardRewardLogToPrint, logToPrint} from "../UI/displayLogs";
+import {cardRewardLogToPrint, cardUpgradeLogToPrint, logToPrint} from "../UI/displayLogs";
 
 
 // Create a Card class with a couple of properties I felt were appropriate.
@@ -133,6 +133,8 @@ export const rewardCard = () => {
 export const upgradeCard = () => {
 
     let unupgraededCardTypeList = [] //creates a new array to store the types that have not been upgraded
+    cardUpgradeLogToPrint(""); // if I dont change this to an empty string it doens't update in the handler function
+
 
 
     cardTypeList.forEach(card => {
@@ -150,14 +152,17 @@ export const upgradeCard = () => {
             initialDeckData.forEach(deckCard => {
                 if(deckCard.type === card.type) { //if the card type is the same as the type selected
                     deckCard.title += "+"; //add a + in the title
-                    deckCard.effect += 2; //Add 2 to the effect
+                    if (card.type === "draw") { // if the card type is draw
+                        deckCard.energyCost -= 1; // reduce the energy cost of the card by 1
+                    } else {
+                        deckCard.effect += 2; //Add 2 to the effect
+                    }
                 }
             })
             card.upgraded = true; //set the upgraded property of card in cardTypeList to true so next time it doesn't appear as an option to upgrade.
+            document.querySelector("#upgradeCardVisual").setAttribute("style", "display:none;") // hide the buttons when the function runs
 
-            console.log(initialDeckData);
-            console.log(unupgraededCardTypeList);
-
+            cardUpgradeLogToPrint(`${card.type} cards upgraded!`) // log message
         }
 
 
