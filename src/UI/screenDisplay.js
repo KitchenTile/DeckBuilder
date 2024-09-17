@@ -19,6 +19,7 @@ export default function screenDisplay(state) {
             document.querySelector("#itemRewardLog").setAttribute("style", "display:none")
             document.querySelector("#cardRewardLog").setAttribute("style", "display:none")
             document.querySelector("#cardUpgradeLog").setAttribute("style", "display:none;")
+            document.querySelector("#card_Reward_Visual").setAttribute("style", "display:none;")
 
             break;
     }
