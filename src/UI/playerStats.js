@@ -15,7 +15,10 @@ const displayPlayerStatsHTML = (game) => {
       <p>Armor: ${game.player.armor}</p>
       <p>Energy: ${game.player.energy}/${game.player.startingEnergy}</p>
     </div>
-    <img src= ${game.player.imgSrc} alt="img"/>
+    <img src=${game.player.imgSrc} alt="img" id="playerImg"/>
+    <img src=${game.player.winImgSrc} alt="img" id="playerWinImg"/>
+    <img src=${game.player.loseImgSrc} alt="img" id="playerLossingImg"/>
+
   `
 
   const healthBar = document.getElementById(`player_healthbar`);

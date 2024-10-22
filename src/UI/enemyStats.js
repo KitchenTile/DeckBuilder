@@ -16,15 +16,15 @@ const displayEnemyStatsHTML = (game) => {
           <div class="health_Row">
             <p>Health: </p>
             <div class="health_Bar_Container">
-              <p class="health_Info">${enemy.health} / ${enemy.spawnHealth} </p>
+              <p class="health_Info">${enemy.isAlive ? `${enemy.health} / ${enemy.spawnHealth}` : "☠"} </p>
               <div class="health_Bar red"></div>
               <div class="health_Bar green" id="enemy_${index}_healthbar"></div>
             </div>
           </div>
           <p>Damage: ${enemy.damage}</p>
-          <p>Next move: ${enemy.nextMove.move}<p>
+          <p class="nextMove">Next move: ${enemy.nextMove.move}<p>
         </div>
-        <img src= ${enemy.imgSrc} alt="img"/>
+        <img src=${enemy.isAlive ? enemy.imgSrc : enemy.deadImg} alt="img"/>
       </div>
     ` 
 
