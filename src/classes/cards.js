@@ -42,7 +42,7 @@ export class Card {
                 }
                 break;
 
-            case "charger":
+            case "charger": 
                 logToPrint(`${this.title} used!`)
                 target.energy += this.effect;
                 if (target.health + this.effect > target.maxHealth){
@@ -54,7 +54,7 @@ export class Card {
             case "draw":
                 logToPrint(`${this.title} used!`)
 
-                if (this.title === "Fill Up") {
+                if (this.title === "Care Package") { // Edge case for care package giving the player the amount of  cards it takes to fill up their hand
                     while(target.hand.length < target.handMax + 1) {
                         if (target.deck.length <= target.handMax - target.hand.length) {
                             target.shuffleDeck()

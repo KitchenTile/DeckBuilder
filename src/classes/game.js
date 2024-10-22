@@ -21,6 +21,7 @@ export default class Game {
         this.player = player;
         this.enemies = enemies;
         this.state = "";
+
         this.eventHandlers = { // after not being able to get the event listener removers right for hours, I looked it up and found this solution
             // I create an object to hold the event listener and the element that event listener is acting on. This way the game knows exactly what and where
             // I'm referencing thigs
@@ -53,7 +54,11 @@ export default class Game {
             upgradeCard();
 
             //{** END SCREEN CALL **}
-            screenDisplay("endScreen");
+            if (this.player.currentTile <= 3){
+                screenDisplay("endScreen win", this.player.currentTile);
+            } else {
+                this.gameWon();
+            }
 
 
             // {** MAP TILES EVENT LISTENER **}  //adding an event listener after the battle is over allows us to click the next fight
@@ -62,8 +67,7 @@ export default class Game {
     }
 
     start() { //fucntion run at the start of the game
-        // console.log("game Started")
-        // console.log(`${this.state}`)
+
         this.restartDeck();
         initDeck(this.player); //get a deck for player
         this.player.deck.forEach(card => {
@@ -75,13 +79,11 @@ export default class Game {
         if (this.player.currentTile === 0) {
             displayMap(this.player.currentTile); // display map, needs some fixing
             populateItemList();
-            // populateRewardCardList();
         }
         this.addEventListeners();
         updateUI();
         if (this.player.currentTile > 0) { //I have to add this here because if I don't the state doesn't change after I select a new tile
             this.state = "PLAYER_TURN"
-            // rewardItem(this.player);
         }
 
         this.playerTurn(); //This doesn't work like i'd like to
@@ -135,8 +137,16 @@ export default class Game {
     }
 
     gameOver() { //game over function currently only displays message 
-        screenDisplay("endScreen");
-        logToPrint(`GAME OVER - ${this.player.name} cashed out at ${this.player.cash} money`);
+        screenDisplay("endScreen lose", this.player.currentTile);
+
+        logToPrint(`GAME OVER - ${this.player.name} cashed out at $${this.player.cash}`);
+    }
+
+    gameWon() {
+        screenDisplay("winScreen", this.player.currentTile);
+
+        logToPrint(`YOU WON! - ${this.player.name} cashed out at $${this.player.cash}`);
+
     }
  
 
@@ -149,13 +159,11 @@ export default class Game {
             // i.e when the battle is over 
 
             // {** CARDS EVENT LISTENER **}
-            // console.log("event listeners added")
             this.player.hand.forEach((card, index) => { //for each card in the player's hand
                 const cardInstance = document.getElementById(`card_${index}`); //get the DOM element in a variable
                 const cardHandler = (event) => this.handleCardClick(event, cardInstance, card); // put the handler function in a variable
                 cardInstance.addEventListener("click",  cardHandler); //create event listener for the element and the handler
                 this.eventHandlers.card.push({ element: cardInstance, handler: cardHandler }); // put both in the event handler object to keep track of active listeners
-                // console.log(this.eventHandlers.card)
             });
 
             // {** ENDBUTTON EVENT LISTENER **}
@@ -179,7 +187,6 @@ export default class Game {
             const tileHandler = () => this.handleTileClick(index);
             tileInstance.addEventListener("click", tileHandler);
             this.eventHandlers.tile.push({ element: tileInstance, handler: tileHandler });
-            // console.log("Tile instance added")
         });
     }
 
@@ -188,7 +195,6 @@ export default class Game {
         // {** END BUTTON EVENT REMOVER **}
         if (this.eventHandlers.endButton) { // since the button event listener is a single instance we don't *have* use an array (but we could)
             this.eventHandlers.endButton.element.removeEventListener("click", this.eventHandlers.endButton.handler); // if there is something stored in the eventhandler.endbutton variable, then remove the event listener
-            // console.log(`REMOVED: ${this.eventHandlers.endButton }`)
         }
 
         // {** CARDS EVENT REMOVER **}
@@ -242,7 +248,7 @@ export default class Game {
     handleTileClick(index) { //function we use to start a fight if the map tile we click is the same as the tile we are in
 
         if (index === this.player.currentTile) { // When we click on the tile we're supposed to it turns yellow indicating it's the current fight
-            document.querySelector(`#tile_${index}`).style.background = "yellow";
+            document.querySelector(`#tile_${index}`).style.color = "yellow";
 
             if (index === 0) {
                 this.startFight(); //I need to add this here because when we start the first fight there's already a battle started
@@ -250,7 +256,7 @@ export default class Game {
 
             if (index > 0) { // everytime we click an other tile then
                 subsequentBattles(this.player) //start a new game instance
-                screenDisplay("restartScreen") //switch the screen display 
+                screenDisplay("restartScreen",this.player.currentTile) //switch the screen display 
                 this.startFight(); //start the battle
                 this.eventHandlers.tile.forEach(({ element, handler }) => { // For some reason I need to remove left over event handlers
                     element.removeEventListener("click", handler);
@@ -261,7 +267,6 @@ export default class Game {
 
     startFight() { //start the fight by switching the game state
         this.state = "PLAYER_TURN";
-        // console.log(this.state)
         updateUI();
 
     }
@@ -274,14 +279,11 @@ export default class Game {
                     tile.completed = true
                     tileInstance.style.animation = "glow 2s infinite";
                 } else if (this.player.currentTile > index) {
-
                     tileInstance.style.animation = "none";
-                    tileInstance.style.background = "green";
                 }
                 } else {
-                    this.gameOver();
+                    this.gameWon();
                     tileInstance.style.animation = "glow 1s infinite";
-                    tileInstance.style.background = "green";
                     tileInstance.style.color = "yellow"
                 }
         });
@@ -298,11 +300,11 @@ const enemyListGen = () => {
     enemyData.forEach((enemy) => {
         switch (enemy.type) {
             case "Mage":
-                const mage = new Mage(enemy.name, enemy.img);
+                const mage = new Mage(enemy.name, enemy.img, enemy.deadImg);
                 enemyList.push(mage);
                 break;
             case "Bandit":
-                const bandit = new Bandit(enemy.name);
+                const bandit = new Bandit(enemy.name, enemy.img, enemy.deadImg);
                 enemyList.push(bandit);
         }
     });

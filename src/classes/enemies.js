@@ -86,14 +86,15 @@ export class Enemy {
 
 //Two enemy subclasses with an unique method each
 export class Mage extends Enemy {
-    constructor(name, imgSrc) {
+    constructor(name, imgSrc, deadImg) {
         super(name);
         this.type = "Mage";
         this.damage = 5 + Math.floor(Math.random() * 3);
         this.buffAbility = 15;
         this.healAbility = 10;
         this.dodgeChance = 0.2;
-        this.imgSrc = imgSrc ?? "../src/images/mage.png";
+        this.imgSrc = imgSrc ?? "../src/images/Assets/cards/enemies/Assets-17.png";
+        this.deadImg = deadImg ?? "../src/images/Assets/cards/enemies/Assets-14.png";
     }
 
     // Buff damage by 20%
@@ -138,12 +139,13 @@ export class Mage extends Enemy {
 }
 
 export class Bandit extends Enemy {
-    constructor (name) {
+    constructor (name, imgSrc, deadImg) {
         super(name) 
         this.damage = 10 + Math.floor(Math.random() * 6);
         this.type = "Fighter";
         this.dodgeChance = 0.4;
-        this.imgSrc = "../src/images/slime.png";
+        this.imgSrc = imgSrc ?? "../src/images/Assets/cards/enemies/Assets-15.png";
+        this.deadImg = deadImg ??  "../src/images/Assets/cards/enemies/Assets-12.png";
     }
 
     //buffs current damage by 50%

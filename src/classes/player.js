@@ -19,7 +19,9 @@ export default class Player {
         this.hand = [];
         this.handMax = 5;
         this.discardPile = [];
-        this.imgSrc = "../src/images/character.png";
+        this.imgSrc = "../src/images/Assets/Assets_cleaner_1.png";
+        this.winImgSrc = "../src/images/Assets/Assets_cleaner_win.png";
+        this.loseImgSrc = "../src/images/Assets/Assets_cleaner_loss.png";
     }
 
 
