@@ -1,4 +1,6 @@
 
+// modify divs to show differnet types of logs
+
 const logToPrint = (log) => {
     const logDiv = document.getElementById("log");
     logDiv.innerHTML =`${log}`

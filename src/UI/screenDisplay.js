@@ -1,9 +1,12 @@
+
+// modify div to update the screen depending on state
+
 export default function screenDisplay(state, index) { 
     switch (state) {
         case "endScreen win": // Change the div's styling to display the logs in the middle of the screen in a larger font
             document.querySelector(".top_bit").setAttribute("style", `flex-direction:row; background-image: url('../src/images/Assets/rooms//bg${index-1}.png')`); // I use .setAttribute instead of .style because flex-drection doesn't work with .style.
             document.querySelector("#enemy").style.display = "none";
-            document.querySelector(".logs").setAttribute("style", "display: flex;top: 10%;left: 40%;font-size: 40px;position: absolute;align-items: flex-start;flex-direction: column;"); 
+            document.querySelector(".logs").setAttribute("style", "display: flex;top: 5%;left: 40%;font-size: 40px;position: absolute;align-items: flex-start;flex-direction: column;"); 
             document.querySelector("#itemRewardLog").setAttribute("style", "display:inline;")
             document.querySelector("#cardRewardLog").setAttribute("style", "display:inline;")
             document.querySelector("#cardUpgradeLog").setAttribute("style", "display:inline; margin-top:20px")

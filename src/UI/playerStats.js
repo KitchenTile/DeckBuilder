@@ -1,6 +1,9 @@
 const displayPlayerStatsHTML = (game) => {
   const playerStats = document.getElementById("player_stats")
 
+  // modify div to show player stats
+
+
   playerStats.innerHTML = `
     <div>
       <h3>${game.player.name}'s stats</h3>

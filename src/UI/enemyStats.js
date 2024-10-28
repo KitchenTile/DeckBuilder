@@ -1,10 +1,11 @@
 
 const displayEnemyStatsHTML = (game) => {
 
+  // modify div to show enemy stats
 
 
   const enemyStatsDiv = document.getElementById("enemy");
-  enemyStatsDiv.innerHTML = ""
+  enemyStatsDiv.innerHTML = "";
 
   game.enemies.forEach((enemy, index) => {
 

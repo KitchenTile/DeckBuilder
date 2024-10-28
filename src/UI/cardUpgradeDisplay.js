@@ -1,4 +1,6 @@
-import "./card.css";
+import "../../style.css"
+
+// modify div to show card upgrade options
 
 const upgradeCardDisplay = (cardTypeList) => {
     const upgradeDiv = document.getElementById("upgradeCardVisual");

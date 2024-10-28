@@ -1,7 +1,10 @@
 import mapData from "../data/mapData";
-import "./map.css"
+import "../../style.css"
 
-const displayMap = (currentTile) => {
+
+// modify div to show map tiles
+
+const displayMap = () => {
     const mapDiv = document.getElementById("map_container")
     mapDiv.innerHTML = "";
     

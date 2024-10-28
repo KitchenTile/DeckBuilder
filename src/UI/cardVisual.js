@@ -1,4 +1,4 @@
-import "./card.css";
+import "../../style.css"
 
 
 const displayCard = (hand) => {

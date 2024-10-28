@@ -1,5 +1,6 @@
-import "./card.css";
+import "../../style.css"
 
+// modify div to show card rewards
 
 const displayRewardCard = (rewardList) => {
     const cardRewardVisual = document.getElementById("card_Reward_Visual");

@@ -1,3 +1,6 @@
+
+// modify div to show info (number of cards in deck, number of discarded cards, score)
+
 const displayDeckHTML = (game) => {
     const deckDiv = document.getElementById("deck")
   
