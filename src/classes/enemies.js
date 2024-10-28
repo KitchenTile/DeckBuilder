@@ -1,9 +1,16 @@
 import {logToPrint} from "../UI/displayLogs";
 
+let difficulty;
 
 //check users difficulty setting to get the right enemy HP
-const currentUser = JSON.parse(localStorage[sessionStorage["loggedInUser"]])
-const difficulty = currentUser.difficulty
+
+if(localStorage[sessionStorage["loggedInUser"]]) {
+
+    const currentUser = JSON.parse(localStorage[sessionStorage["loggedInUser"]])
+
+    difficulty = currentUser.difficulty
+
+}
 
 //Create enemy class with some properties that will be inhereted by the differnet types of enemies
 export class Enemy {
