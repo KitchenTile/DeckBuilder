@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" >
+    <title>Sweeping Deck Login</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body class="indexBody">
+    <div class="pageContainer">
+        <div class="navBar"></div>
+
+        <!-- introductory text, explains game login -->
+        <div class="titleIntro">
+            <h1>Welcome to your next job opportunity</h1>
+            <h2>First time? No problem! Click on Apply now to apply for the position. We just need your name, a memorable word, and the type of emplyment you are interested in.</h2>
+            <h2>Remember, your memorable word has to be at least 8 characters long and the last character must be a number. The type of employment will determine how hard your shifts are, so choose carefully!</h2>
+        </div>
+
+        <!-- grid to display the login and register forms -->
+        <div class="loginContainer">
+            <button class="loginbuttons" id="apply">Apply now!</button>
+            <h2>- Or -</h2>
+            <button class="loginbuttons" id="clockin">Clock in!</button>
+
+            <!-- register form -->
+            <form class="userForm" id="registerForm">
+                <p>
+                    Email:
+                    <input type="text" class="inputBox" id="registerEmail" placeholder="Email..." required>
+                    <img src="/src/images/Assets/cards/enemies/Assets-17.png" id="emailImg">
+                </p>
+                <p>
+                    First Name:
+                    <input type="text" class="inputBox" id="registerUserName" placeholder="Your Name..." required>
+                    <img src="/src/images/Assets/cards/enemies/Assets-17.png" id="nameImg">
+                </p>
+                <p>
+                    Password: 
+                    <input type="text" class="inputBox" id="registerPassword" placeholder="Your Password..." required>
+                    <img src="/src/images/Assets/cards/enemies/Assets-16.png" id="passImg">
+
+                </p>
+                <p>Employment Type:</p>
+                <div>
+                    <input type="radio" id="Part-time" name="empType" value="Part-time" checked/>
+                    <label for="Part-time">Part-time</label>
+                    <img src="/src/images/Assets/cards/enemies/Assets-15.png" id="parttimeImg">
+
+                    <input type="radio" id="Full-time" name="empType" value="Full-time"/>
+                    <label for="Full-time">Full-time</label>
+                    <img src="/src/images/Assets/cards/enemies/Assets-15.png" id="fulltimeImg">
+
+                </div>
+
+
+                <button type="submit">Sign me up!</button>
+            </form>
+
+            <img src="/src/images/Assets/Assets_cleaner_win.png" alt="cleaner" id="cleaner" />
+
+            <!-- login form -->
+            <form class="userForm" id="loginForm">
+                <input type="text" class="inputBox" id="loginEmail" placeholder="Email" required>
+                <input type="text" class="inputBox" id="loginPassword" placeholder="Password" required>
+                <button type="submit">Start shift!</button>
+            </form>
+
+            <!-- info message -->
+            <div id="messageDiv"></div>
+        </div>
+    </div>  
+    <script type="module" src="/src/login.js"></script>
+  </body>
+</html>

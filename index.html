@@ -3,11 +3,17 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" >
-    <title>Deck Dungeon</title>
+    <title>Sweeping Deck</title>
     <link rel="stylesheet" href="style.css">
   </head>
-  <body>
+  <body class="indexBody">
+    <div class="navBar"></div>
+
+    <!-- GAME SECTION -->
+
     <div class="gameDiv">
+
+          <!-- top of the game display -->
       <div class="top_bit">
           <div class="stats">
             <div id="player_stats"></div>
@@ -15,6 +21,8 @@
               <div id="enemy"></div>
             </div>
           </div>
+
+          <!-- differnet types of logs to display -->
           <div class="logs">
             <div id="log"></div>
             <div id="itemRewardLog"></div>
@@ -23,22 +31,28 @@
             <div id="upgradeCardVisual"></div>
             <div id="cardUpgradeLog"></div>
           </div>
-          <div class=""></div>
       </div>
+
+      <!-- Bottom of the game display -->
       <div class="bottomConsole">
+
+        <!-- info div, lefmost at the bottom, holds score deck, and end turn button -->
         <div id="info">
           <div id="score"></div>
           <button id="deck"></button>
           <div id="discard"></div>
           <button id="endButton">END TURN</button>
         </div>
-        <img src="../src/images/card_back.png" alt="img" id="card_back"/>
-        <div id="hand_container"></div>
+
+        <!-- map display -->
+        <div id="tiles_over_map">
+          <img src="../src/images/Assets_floorplan.png" alt="img" id="map"/>
+          <div id="map_container"></div>
       </div>
-      <div id="tiles_over_map">
-        <img src="../src/images/map.png" alt="img" style="height: 130px;">
-        <div id="map_container">
-      </div>
+
+      <!-- hand display -->
+      <div id="hand_container"></div>
+
     </div>
 
     </div>
