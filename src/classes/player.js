@@ -5,6 +5,10 @@ import {logToPrint} from "../UI/displayLogs";
 //Will probalby change a lot of this later on
 export default class Player {
     constructor(name) {
+        
+        //My constructor has a name, max and current health, the players current map tile, starting and current armor
+        //deck, hand, discard pile and items array, starting and current energy, max hand size and images for differnet states.
+
         this.name = name;
         this.maxHealth = 100;
         this.health = this.maxHealth;
@@ -51,6 +55,7 @@ export default class Player {
         this.deck.push(card);
     }
 
+    //currently unused but usefull to have?
     //Method to display the deck in the terminal
     displayDeck() {
         console.log(`////////////////////////////////////`);
@@ -82,8 +87,8 @@ export default class Player {
                 this.shuffleDeck();
             }
         }
-        // this.displayDeck();
-        // this.displayHand();
+        this.displayDeck();
+        this.displayHand();
     }
 
     shuffleDeck() {
@@ -91,7 +96,7 @@ export default class Player {
         this.discardPile.forEach(card => {
             this.deck.push(card);
         })
-        // this.displayDeck();
+        this.displayDeck();
         this.discardPile = [];
     }
 
@@ -111,5 +116,15 @@ export default class Player {
             console.log(`-- ${card.title} - Energy Cost: ${card.energyCost}`)
         })
         console.log(`////////////////////////////////////`);
+    }
+    
+    //Save score to be displayed in the scoreboards.
+    saveScore(user) {
+        const currentUser = JSON.parse(localStorage[user]);
+        currentUser.score = this.cash;
+
+        localStorage.setItem(user, JSON.stringify(currentUser));
+
+        console.log(currentUser);
     }
 }

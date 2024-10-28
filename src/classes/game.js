@@ -3,11 +3,9 @@
 //Create a game class to manage turn based logic
 
 //{** IMPORTS **}
-import cardUpgradeDisplay from "../UI/cardUpgradeDisplay";
 import {logToPrint} from "../UI/displayLogs";
 import displayMap from "../UI/mapVisual";
 import screenDisplay from "../UI/screenDisplay";
-import { cardTypeList } from "../data/cardData";
 import enemyData from "../data/enemyData";
 import mapData from "../data/mapData";
 import { updateUI, subsequentBattles } from "../main";
@@ -140,13 +138,16 @@ export default class Game {
         screenDisplay("endScreen lose", this.player.currentTile);
 
         logToPrint(`GAME OVER - ${this.player.name} cashed out at $${this.player.cash}`);
+        this.player.saveScore(sessionStorage["loggedInUser"]);
+
+        console.log(sessionStorage["loggedInUser"])
     }
 
     gameWon() {
         screenDisplay("winScreen", this.player.currentTile);
 
         logToPrint(`YOU WON! - ${this.player.name} cashed out at $${this.player.cash}`);
-
+        this.player.saveScore(sessionStorage["loggedInUser"]);
     }
  
 
@@ -268,7 +269,6 @@ export default class Game {
     startFight() { //start the fight by switching the game state
         this.state = "PLAYER_TURN";
         updateUI();
-
     }
 
     updateMap() {  //update map, to change color and state of tile

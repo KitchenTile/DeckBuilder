@@ -1,11 +1,15 @@
 import {logToPrint} from "../UI/displayLogs";
 
 
+//check users difficulty setting to get the right enemy HP
+const currentUser = JSON.parse(localStorage[sessionStorage["loggedInUser"]])
+const difficulty = currentUser.difficulty
+
 //Create enemy class with some properties that will be inhereted by the differnet types of enemies
 export class Enemy {
     constructor(name) {
         this.name = name;
-        this.spawnHealth = 1 + Math.floor(Math.random() * 10); // starting health at 30-40 HP
+        this.spawnHealth = /*1 + Math.floor(Math.random() * 10)*/ difficulty === "Part-time" ? 1 + Math.floor(Math.random() * 10) : 20 + Math.floor(Math.random() * 10); // starting health at 30-40 HP
         this.health = this.spawnHealth; // this will keep track of the enemies health throughout the fight
         this.isAlive = true;
         this.nextMove = null;
@@ -109,7 +113,6 @@ export class Mage extends Enemy {
     heal(target) {
         if (target.isAlive) { // targets get decided before the moves are played, so if we don't add this conditional dead enemies can potentially be healed.
             if (target.health + this.healAbility >= target.spawnHealth) {
-                // console.log("heal")
                 target.health = target.spawnHealth;
                 logToPrint(`${this.name} healed ${target.name} back to full health`)
                 console.log(`${this.name} healed ${target.name} back to full health`)
@@ -152,7 +155,5 @@ export class Bandit extends Enemy {
     anger() {
         this.damage = Math.ceil(this.damage + this.damage * 0.2);
         logToPrint(`${this.name}'s damage increased to ${this.damage}!`);
-        // console.log(`${this.name}'s damage increased to ${this.damage}!`);
-
     }
 }
