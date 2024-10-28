@@ -12,13 +12,30 @@ navBar();
 
 //manage login and set user name
 
-let loggedInUser = sessionStorage.getItem('loggedInUser');
-let currentPlayer = JSON.parse(localStorage[sessionStorage["loggedInUser"]])
+let currentPlayer;
 
-if (!loggedInUser) {
-  // If no user is logged in, redirect to login page
+
+if(localStorage[sessionStorage["loggedInUser"]]) {
+
+  let loggedInUser = sessionStorage.getItem('loggedInUser');
+
+  currentPlayer = JSON.parse(localStorage[sessionStorage["loggedInUser"]])
+
+
+  if (!loggedInUser) {
+
+    // If no user is logged in, redirect to login page
+
+    window.location.href = "HOME.html";
+
+  } 
+
+} else {
+
   window.location.href = "HOME.html";
-} 
+
+}
+
 
 
 // Game starts here
